@@ -1,0 +1,571 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Fade-In Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 40px 0;
+    background: linear-gradient(180deg, #000000, #011f45); 
+}
+
+header img {
+    max-width: 200px;
+}
+
+header p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Floating Button Styles */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 500px;
+    background-color: #011f45;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    z-index: 1000;
+    box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.floating-button:hover {
+    background-color: #2E7D32;
+    box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20;
+}
+
+/* WhatsApp Icon Styles */
+.whatsapp-icon {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(37, 211, 102, 0.7);
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-icon:hover {
+    transform: scale(1.1);
+}
+
+.whatsapp-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    width: 100%;
+    min-height: 100%;
+}
+
+.footer-links {
+    margin: 1rem 0;
+}
+
+.footer-links a {
+    color: #4da8ff;
+    text-decoration: none;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+    line-height: 1.6;
+    padding: 1.5rem;
+}
+
+#main-footer {
+    background-color: #1a1a1a;
+    padding: 0;
+}
+
+#terms, #privacy {
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 8px;
+    border: none;
+}
+
+#terms h2, #privacy h2 {
+    color: #1a1a1a;
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+}
+
+#terms h3, #privacy h3 {
+    color: #555555;
+    font-size: 1.2rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+#terms p, #terms ul, #privacy p, #privacy ul {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+#terms ul, #privacy ul {
+    padding-left: 1.5rem;
+}
+
+#terms li, #privacy li {
+    margin-bottom: 0.6rem;
+}
+
+#terms a, #privacy a {
+    color: #4da8ff;
+    text-decoration: none;
+}
+
+#terms a:hover, #privacy a:hover {
+    text-decoration: underline;
+}
+
+.back-link {
+    color: #4da8ff;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Section Styles */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    background: linear-gradient(180deg, #ffd700, #ffeb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+h2::before,
+h2::after {
+    content: '★';
+    font-size: 36px;
+    background: linear-gradient(180deg, #ffd700, #ffeb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Cotacoes Section */
+#cotacoes {
+    background: linear-gradient(0deg, #000000, #011f45);
+}
+
+#cotacoes img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.expandable-container {
+    cursor: pointer;
+    display: inline-block;
+    margin: 20px 0;
+}
+
+.expandable-title {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    background: linear-gradient(180deg, #ffd700, #ffeb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+
+.cotacoes-text {
+    display: block;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    padding: 0;
+    transition: max-height 0.5s ease, opacity 0.5s ease, padding 0.5s ease;
+}
+
+.cotacoes-text.active {
+    max-height: 2000px;
+    opacity: 1;
+    padding: 15px 0;
+}
+
+.cotacoes-text .cotacao-grid {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    gap: 8px 10px;
+    align-items: center;
+}
+
+.cotacoes-text .cotacao-grid hr {
+    grid-column: 1 / -1;
+    border: 0;
+    border-top: 1px solid #ffd700;
+    margin: 8px 0;
+}
+
+.cotacoes-text span {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.cotacoes-text i {
+    color: #ffd700;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.cotacoes-text .value {
+    color: #ffd700;
+    text-align: right;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Bonus Section */
+#bonus {
+    background-color: #000000;
+}
+
+#bonus .bonus-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#bonus .bonus-card {
+    background-color: #000000;
+    padding: 15px;
+    border-radius: 20px;
+    width: 250px;
+    text-align: center;
+    border: 1px solid #4da8ff;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+#bonus .bonus-card:hover {
+    transform: scale(1.05);
+}
+
+#bonus .bonus-card .highlight {
+    display: inline-block;
+    font-size: 48px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 
+        2px 2px 5px rgba(0, 0, 0, 0.9),
+        -1px -1px 3px rgba(255, 255, 255, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.3);
+    transform: perspective(500px) rotateX(10deg);
+    margin-bottom: 10px;
+    font-family: 'Oswald', sans-serif;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+#bonus .bonus-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffd700, #ffeb3b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#bonus .bonus-card p {
+    font-size: 14px;
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#bonus .observation {
+    font-size: 16px;
+    color: #fff;
+    margin-top: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: flex-start;
+}
+
+#bonus .observation::before {
+    color: #4da8ff;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Beneficios Section */
+#beneficios {
+    background-color: #000000;
+}
+
+#beneficios ul {
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#beneficios li {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+#beneficios li::before {
+    content: '★';
+    color: #ffd700;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+/* Responsabilidade Section */
+#responsabilidade {
+    background-color: #000000;
+}
+
+#responsabilidade .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#responsabilidade .plus-18-container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    border: 3px solid #ff0000;
+    border-radius: 50%;
+    width: 
+
+50px;
+    height: 50px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    transition: transform 0.3s ease;
+}
+
+#responsabilidade .plus-18-container:hover {
+    transform: scale(1.1);
+}
+
+#responsabilidade .plus-18 {
+    display: flex;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: none;
+}
+
+#responsabilidade .plus-18 .number-18 {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+#responsabilidade p {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    color: #fff;
+    margin: 5px 0;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(255, 215, 0, 0.5);
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .floating-button {
+        width: calc(100% - 40px);
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+
+    .whatsapp-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .whatsapp-icon img {
+        width: 35px;
+        height: 35px;
+    }
+
+    footer {
+        padding: 1rem;
+    }
+
+    .content-section {
+        padding: 1rem;
+    }
+
+    #terms h2, #privacy h2 {
+        font-size: 1.5rem;
+    }
+
+    #terms h3, #privacy h3 {
+        font-size: 1.1rem;
+    }
+
+    #terms p, #terms li, #privacy p, #privacy li {
+        font-size: 0.9rem;
+    }
+
+    .footer-links a {
+        margin: 0 0.3rem;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .content-section {
+        max-width: 95%;
+    }
+
+    #terms h2, #privacy h2 {
+        font-size: 1.6rem;
+    }
+
+    #terms h3, #privacy h3 {
+        font-size: 1.15rem;
+    }
+
+    .footer-links a {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 40px 15px;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    #beneficios ul {
+        max-width: 90%;
+    }
+
+    #beneficios li {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    #beneficios li::before {
+        font-size: 18px;
+        margin-right: 8px;
+    }
+}
