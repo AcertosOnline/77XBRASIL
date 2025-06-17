@@ -82,7 +82,7 @@ function updateLinks() {
         saveToLocalStorage(defaultValues.whatsapp, defaultValues.promoterCode);
     }
 
-    const defaultMessage = encodeURIComponent('Olá, quero saber mais sobre o VaiDarBoa!');
+    const defaultMessage = encodeURIComponent('Olá, preciso de ajuda!');
     whatsappLink.href = `https://wa.me/${finalWhatsapp}?text=${defaultMessage}`;
     registerButton.onclick = function() {
         window.location.href = `https://app.77xbrasil.com.br/pr/${finalPromoterCode}`;
