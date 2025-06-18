@@ -1,0 +1,47 @@
+name: Generate and Update Sitemap
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.html'  # Trigger para adição, modificação ou exclusão de arquivos HTML
+  workflow_dispatch:  # Permite execução manual para testes
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    name: Generate a sitemap
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necessário para obter o histórico de commits para lastmod
+
+      - name: Generate the sitemap
+        id: sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://77xxbrasil.com/  # URL base do seu site
+          path-to-root: ./  # Caminho para a raiz do site no repositório
+          drop-html-extension: true  # Remove a extensão .html das URLs
+          date-only: true  # Usa apenas a data (sem hora) no campo lastmod
+          config-file: sitemap-config.json  # Arquivo de configuração para changefreq e priority
+
+      - name: Commit and push sitemap changes
+        run: |
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add sitemap.xml
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update sitemap.xml with new, modified, or deleted HTML files"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ping Google
+        run: |
+          curl -s -o /dev/null -w "Ping Google: %{http_code}\n" http://www.google.com/ping?sitemap=https://77xxbrasil.com/sitemap.xml
