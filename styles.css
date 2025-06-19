@@ -38,6 +38,8 @@ header p {
     color: #fff;
     margin-top: 20px;
     font-family: 'Oswald', sans-serif;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /* Floating Button Styles */
