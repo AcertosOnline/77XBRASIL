@@ -421,62 +421,6 @@ h2::after {
     font-size: 20px;
 }
 
-/* Responsabilidade Section */
-#responsabilidade {
-    background-color: #000000;
-}
-
-#responsabilidade .content-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-#responsabilidade .plus-18-container {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    border: 3px solid #ff0000;
-    border-radius: 50%;
-    width: 
-
-50px;
-    height: 50px;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-    transition: transform 0.3s ease;
-}
-
-#responsabilidade .plus-18-container:hover {
-    transform: scale(1.1);
-}
-
-#responsabilidade .plus-18 {
-    display: flex;
-    align-items: center;
-    font-family: 'Oswald', sans-serif;
-    color: #000000;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-shadow: none;
-}
-
-#responsabilidade .plus-18 .number-18 {
-    font-size: 20px;
-    font-weight: 900;
-}
-
-#responsabilidade p {
-    font-size: 20px;
-    font-weight: 700;
-    font-family: 'Oswald', sans-serif;
-    color: #fff;
-    margin: 5px 0;
-    text-transform: uppercase;
-    text-shadow: 1px 1px 2px rgba(255, 215, 0, 0.5);
-}
-
 /* Responsive Styles */
 @media (max-width: 600px) {
     .floating-button {
