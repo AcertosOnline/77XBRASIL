@@ -32,11 +32,6 @@ header {
     background: linear-gradient(180deg, #000000, #011f45); 
 }
 
-header img {
-    width: 250px;
-    weight: 167px;
-}
-
 header p {
     font-size: 24px;
     font-weight: bold;
