@@ -499,52 +499,6 @@ h2::after {
         padding: 1rem;
     }
 
-    .content-section {
-        padding: 1rem;
-    }
-
-    #terms h2, #privacy h2 {
-        font-size: 1.5rem;
-    }
-
-    #terms h3, #privacy h3 {
-        font-size: 1.1rem;
-    }
-
-    #terms p, #terms li, #privacy p, #privacy li {
-        font-size: 0.9rem;
-    }
-
-    .footer-links a {
-        margin: 0 0.3rem;
-        font-size: 0.9rem;
-        padding: 0.5rem;
-    }
-
-    .back-link {
-        font-size: 0.9rem;
-        padding: 0.5rem;
-    }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-    .content-section {
-        max-width: 95%;
-    }
-
-    #terms h2, #privacy h2 {
-        font-size: 1.6rem;
-    }
-
-    #terms h3, #privacy h3 {
-        font-size: 1.15rem;
-    }
-
-    .footer-links a {
-        font-size: 0.95rem;
-    }
-}
-
 @media (max-width: 768px) {
     section {
         padding: 40px 15px;
