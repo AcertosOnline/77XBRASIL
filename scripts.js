@@ -20,7 +20,7 @@ function handleSectionVisibility(sectionId) {
 }
 
 function setupSectionAnimations() {
-    const sections = ['cotacoes', 'bonus', 'beneficios', 'responsabilidade'];
+    const sections = ['cotacoes', 'bonus', 'beneficios'];
     sections.forEach(sectionId => {
         document.addEventListener('scroll', () => handleSectionVisibility(sectionId));
         window.addEventListener('load', () => handleSectionVisibility(sectionId));
