@@ -237,8 +237,8 @@ h2::after {
 }
 
 #cotacoes img {
-    max-width: 100%;
-    height: auto;
+    width: 300px;
+    height: 300px;
     margin-bottom: 20px;
 }
 
