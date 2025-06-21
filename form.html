@@ -27,11 +27,17 @@
         .readonly-input {
             flex: 1;
             background-color: #f3f4f6;
-            cursor: default;
+            cursor: pointer;
         }
         .icon-button {
             cursor: pointer;
             padding: 0 8px;
+        }
+        .copy-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
 </head>
@@ -54,13 +60,15 @@
             <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
             <p class="text-gray-700">Seu link personalizado:</p>
             <div class="readonly-input-container">
-                <input id="successLink" type="text" readonly class="readonly-input mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-indigo-600" value="">
+                <div class="relative flex-1">
+                    <input id="successLink" type="text" readonly class="readonly-input mt-1 block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg shadow-sm text-indigo-600" value="">
+                    <button id="copyLinkButton" class="copy-icon">
+                        <img src="form_img/copiar.svg" alt="Copiar" class="w-5 h-5">
+                    </button>
+                </div>
                 <a id="openLink" href="#" target="_blank" class="icon-button">
                     <img src="form_img/abrir.svg" alt="Abrir" class="w-5 h-5">
                 </a>
-                <button id="copyLinkButton" class="icon-button">
-                    <img src="form_img/copiar.svg" alt="Copiar" class="w-5 h-5">
-                </button>
             </div>
             <p class="text-sm text-gray-500">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
         </div>
@@ -129,15 +137,25 @@
         let isLinkValid = false;
         let isWhatsappValid = false;
         let debounceTimeout;
+        let notificationTimeout;
 
         // Lista de DDDs válidos no Brasil (11 a 99)
         const validDDDs = Array.from({ length: 89 }, (_, i) => (i + 11).toString());
 
-        // Função para mostrar notificações (sem fechar automaticamente)
+        // Função para mostrar notificações com auto-fechamento
         function showNotification(message, isError = false) {
+            // Limpar timeout anterior, se existir
+            if (notificationTimeout) {
+                clearTimeout(notificationTimeout);
+            }
             notificationText.textContent = message;
             notification.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700', 'opacity-0');
             notification.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700', 'opacity-100');
+            // Auto-fechamento após 10 segundos
+            notificationTimeout = setTimeout(() => {
+                notification.classList.add('opacity-0');
+                setTimeout(() => notification.classList.add('hidden'), 300);
+            }, 10000);
         }
 
         // Função para exibir mensagens de status dinâmicas
@@ -349,18 +367,22 @@
 
         // Fechar notificação manualmente
         closeNotification.addEventListener('click', () => {
+            clearTimeout(notificationTimeout);
             notification.classList.add('opacity-0');
             setTimeout(() => notification.classList.add('hidden'), 300);
         });
 
-        // Botão Copiar Link
-        copyLinkButton.addEventListener('click', () => {
+        // Botão Copiar Link e clique no input
+        function copyLinkToClipboard() {
             navigator.clipboard.writeText(successLink.value).then(() => {
                 showNotification('Link copiado!', false);
             }).catch(() => {
                 showNotification('Erro ao copiar o link.', true);
             });
-        });
+        }
+
+        copyLinkButton.addEventListener('click', copyLinkToClipboard);
+        successLink.addEventListener('click', copyLinkToClipboard);
 
         // Resetar para criar nova página
         resetLink.addEventListener('click', (e) => {
