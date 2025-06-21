@@ -13,11 +13,31 @@
             margin-top: 10px;
             text-align: center;
         }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .readonly-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .readonly-input {
+            flex: 1;
+            background-color: #f3f4f6;
+            cursor: default;
+        }
+        .icon-button {
+            cursor: pointer;
+            padding: 0 8px;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center min-h-screen">
     <div id="loader-container" class="hidden fixed inset-0 flex flex-col justify-center items-center h-screen bg-gray-900/50 z-50">
-        <img src="loader-espiral.svg" alt="Carregando..." class="w-20 h-20">
+        <img src="form_img/loader-espiral.svg" alt="Carregando..." class="w-20 h-20">
         <div id="status-message" class="status-message"></div>
     </div>
     <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg relative z-10">
@@ -33,13 +53,13 @@
         <div id="successMessage" class="hidden text-center space-y-4">
             <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
             <p class="text-gray-700">Seu link personalizado:</p>
-            <div class="flex items-center justify-center space-x-2">
-                <a id="successLink" href="#" target="_blank" class="text-indigo-600 underline break-all truncate max-w-xs"></a>
-                <a id="openLink" href="#" target="_blank" class="text-gray-600 hover:text-indigo-600">
-                    <i class="fas fa-external-link-alt"></i>
+            <div class="readonly-input-container">
+                <input id="successLink" type="text" readonly class="readonly-input mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-indigo-600" value="">
+                <a id="openLink" href="#" target="_blank" class="icon-button">
+                    <img src="form_img/abrir.svg" alt="Abrir" class="w-5 h-5">
                 </a>
-                <button id="copyLinkButton" class="text-gray-600 hover:text-indigo-600 focus:outline-none">
-                    <i class="fas fa-copy"></i>
+                <button id="copyLinkButton" class="icon-button">
+                    <img src="form_img/copiar.svg" alt="Copiar" class="w-5 h-5">
                 </button>
             </div>
             <p class="text-sm text-gray-500">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
@@ -47,12 +67,14 @@
         <form id="promotorForm" class="space-y-6">
             <div class="relative">
                 <label for="promotorLink" class="block text-sm font-medium text-gray-700">Link de Promotor</label>
-                <div class="relative">
-                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 pr-20 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
-                    <button type="button" id="pasteLinkButton" class="absolute inset-y-0 right-8 mt-1 mr-2 px-2 py-1 text-xs text-gray-600 hover:text-gray-800">Colar</button>
-                    <span id="linkStatus" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center cursor-pointer">
-                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                <div class="input-container">
+                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
+                    <span id="linkStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
+                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                     </span>
+                    <button type="button" id="pasteLinkButton" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center">
+                        <img src="form_img/colar.svg" alt="Colar" class="w-5 h-5">
+                    </button>
                 </div>
                 <p id="linkError" class="mt-1 text-sm text-red-600 hidden"></p>
             </div>
@@ -60,12 +82,14 @@
                 <label for="whatsappNumber" class="block text-sm font-medium text-gray-700">Número do WhatsApp</label>
                 <div class="flex relative">
                     <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border">+55</span>
-                    <div class="relative flex-1">
-                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 pr-20 box-border" placeholder="(XX) 9XXXX-XXXX" required>
-                        <button type="button" id="pasteWhatsappButton" class="absolute inset-y-0 right-8 mt-1 mr-2 px-2 py-1 text-xs text-gray-600 hover:text-gray-800">Colar</button>
-                        <span id="whatsappStatus" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center cursor-pointer">
+                    <div class="input-container flex-1">
+                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
+                        <span id="whatsappStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
                             <svg id="whatsappIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                         </span>
+                        <button type="button" id="pasteWhatsappButton" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center">
+                            <img src="form_img/colar.svg" alt="Colar" class="w-5 h-5">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -219,8 +243,7 @@
 
         // Função para exibir mensagem de sucesso
         function showSuccessMessage(data) {
-            successLink.textContent = data.htmlPagesUrl;
-            successLink.href = data.htmlPagesUrl;
+            successLink.value = data.htmlPagesUrl;
             openLink.href = data.htmlPagesUrl;
             promotorForm.classList.add('hidden');
             successMessage.classList.remove('hidden');
@@ -332,7 +355,7 @@
 
         // Botão Copiar Link
         copyLinkButton.addEventListener('click', () => {
-            navigator.clipboard.writeText(successLink.href).then(() => {
+            navigator.clipboard.writeText(successLink.value).then(() => {
                 showNotification('Link copiado!', false);
             }).catch(() => {
                 showNotification('Erro ao copiar o link.', true);
