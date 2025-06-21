@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Promotor</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         .status-message {
             color: white;
@@ -32,8 +33,15 @@
         <div id="successMessage" class="hidden text-center space-y-4">
             <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
             <p class="text-gray-700">Seu link personalizado:</p>
-            <a id="successLink" href="#" target="_blank" class="text-indigo-600 underline break-all"></a>
-            <button id="copyLinkButton" class="mt-4 w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200">Copiar Link</button>
+            <div class="flex items-center justify-center space-x-2">
+                <a id="successLink" href="#" target="_blank" class="text-indigo-600 underline break-all truncate max-w-xs"></a>
+                <a id="openLink" href="#" target="_blank" class="text-gray-600 hover:text-indigo-600">
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
+                <button id="copyLinkButton" class="text-gray-600 hover:text-indigo-600 focus:outline-none">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
             <p class="text-sm text-gray-500">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
         </div>
         <form id="promotorForm" class="space-y-6">
@@ -43,7 +51,7 @@
                     <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 pr-20 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
                     <button type="button" id="pasteLinkButton" class="absolute inset-y-0 right-8 mt-1 mr-2 px-2 py-1 text-xs text-gray-600 hover:text-gray-800">Colar</button>
                     <span id="linkStatus" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center cursor-pointer">
-                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                     </span>
                 </div>
                 <p id="linkError" class="mt-1 text-sm text-red-600 hidden"></p>
@@ -89,6 +97,7 @@
         const successMessage = document.getElementById('successMessage');
         const successLink = document.getElementById('successLink');
         const copyLinkButton = document.getElementById('copyLinkButton');
+        const openLink = document.getElementById('openLink');
         const resetLink = document.getElementById('resetLink');
         const pasteLinkButton = document.getElementById('pasteLinkButton');
         const pasteWhatsappButton = document.getElementById('pasteWhatsappButton');
@@ -212,6 +221,7 @@
         function showSuccessMessage(data) {
             successLink.textContent = data.htmlPagesUrl;
             successLink.href = data.htmlPagesUrl;
+            openLink.href = data.htmlPagesUrl;
             promotorForm.classList.add('hidden');
             successMessage.classList.remove('hidden');
         }
