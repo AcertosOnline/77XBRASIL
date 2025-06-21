@@ -39,6 +39,12 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        /* Custom focus style for thinner borders */
+        input:focus {
+            --tw-ring-width: 1px !important;
+            --tw-ring-offset-width: 0px !important;
+            border-width: 1px !important;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center min-h-screen">
@@ -76,7 +82,7 @@
             <div class="relative">
                 <label for="promotorLink" class="block text-sm font-medium text-gray-700">Link de Promotor</label>
                 <div class="input-container">
-                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
+                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
                     <span id="linkStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
                         <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                     </span>
@@ -91,7 +97,7 @@
                 <div class="flex relative">
                     <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border">+55</span>
                     <div class="input-container flex-1">
-                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
+                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
                         <span id="whatsappStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
                             <svg id="whatsappIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                         </span>
