@@ -39,11 +39,63 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        .status-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 3rem; /* Position to the left of paste button */
+        }
+        .paste-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem; /* Adjusted to ensure space for status icon */
+        }
         /* Custom focus style for thinner borders */
         input:focus {
             --tw-ring-width: 1px !important;
             --tw-ring-offset-width: 0px !important;
             border-width: 1px !important;
+        }
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            .main-container {
+                padding: 1rem;
+                min-width: 300px;
+            }
+            .status-message {
+                font-size: 1rem;
+            }
+            .notification {
+                padding: 0.75rem;
+                font-size: 0.875rem;
+            }
+            .whatsapp-prefix {
+                min-width: 60px;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            .success-text {
+                font-size: 0.875rem;
+            }
+            .readonly-input-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .icon-button {
+                padding: 0.5rem;
+            }
+            .status-icon {
+                right: 2.5rem; /* Adjusted for mobile */
+            }
+            .paste-button {
+                right: 0.5rem; /* Adjusted for mobile */
+            }
+        }
+        @media (min-width: 400px) {
+            .readonly-input-container {
+                flex-direction: row;
+            }
         }
     </style>
 </head>
@@ -52,9 +104,9 @@
         <img src="form_img/loader-espiral.svg" alt="Carregando..." class="w-20 h-20">
         <div id="status-message" class="status-message"></div>
     </div>
-    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg relative z-10">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg relative z-10 main-container">
         <h1 class="text-3xl font-semibold text-gray-800 text-center mb-8">Formulário de Promotor</h1>
-        <div id="notification" class="hidden absolute top-4 left-4 right-4 p-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300" role="alert">
+        <div id="notification" class="hidden absolute top-4 left-4 right-4 p-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300 notification" role="alert">
             <span id="notificationText"></span>
             <button id="closeNotification" class="text-gray-500 hover:text-gray-700">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -64,7 +116,7 @@
         </div>
         <div id="successMessage" class="hidden text-center space-y-4">
             <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
-            <p class="text-gray-700">Seu link personalizado:</p>
+            <p class="text-gray-700 success-text">Seu link personalizado:</p>
             <div class="readonly-input-container">
                 <div class="relative flex-1">
                     <input id="successLink" type="text" readonly class="readonly-input mt-1 block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg shadow-sm text-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200" value="">
@@ -76,17 +128,17 @@
                     <img src="form_img/abrir.svg" alt="Abrir" class="w-5 h-5">
                 </a>
             </div>
-            <p class="text-sm text-gray-500">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
+            <p class="text-sm text-gray-500 success-text">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
         </div>
         <form id="promotorForm" class="space-y-6">
             <div class="relative">
                 <label for="promotorLink" class="block text-sm font-medium text-gray-700">Link de Promotor</label>
                 <div class="input-container">
-                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
-                    <span id="linkStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
+                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 pr-20 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
+                    <span id="linkStatus" class="status-icon">
                         <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                     </span>
-                    <button type="button" id="pasteLinkButton" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center">
+                    <button type="button" id="pasteLinkButton" class="paste-button">
                         <img src="form_img/colar.svg" alt="Colar" class="w-5 h-5">
                     </button>
                 </div>
@@ -95,13 +147,13 @@
             <div class="relative">
                 <label for="whatsappNumber" class="block text-sm font-medium text-gray-700">Número do WhatsApp</label>
                 <div class="flex relative">
-                    <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border">+55</span>
+                    <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border whatsapp-prefix">+55</span>
                     <div class="input-container flex-1">
-                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
-                        <span id="whatsappStatus" class="absolute inset-y-0 right-8 mt-1 mr-2 flex items-center cursor-pointer">
+                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 pr-20 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
+                        <span id="whatsappStatus" class="status-icon">
                             <svg id="whatsappIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
                         </span>
-                        <button type="button" id="pasteWhatsappButton" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center">
+                        <button type="button" id="pasteWhatsappButton" class="paste-button">
                             <img src="form_img/colar.svg" alt="Colar" class="w-5 h-5">
                         </button>
                     </div>
