@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Não Encontrada</title>
+    <title>Página em Construção</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,34 +21,135 @@
             padding: 20px;
         }
         h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        #progress {
             font-size: 48px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        #status {
+            font-size: 18px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+        .url-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 20px;
         }
-        p {
-            font-size: 18px;
-            margin-bottom: 10px;
+        #url-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            background-color: #f9f9f9;
         }
-        a {
-            color: #007bff;
-            text-decoration: none;
+        #copy-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
         }
-        a:hover {
-            text-decoration: underline;
+        #copy-button:hover {
+            background-color: #0056b3;
+        }
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        #notification.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>404 - Página Não Encontrada</h1>
-        <p>Desculpe, mas a página que você tentou acessar não existe.</p>
-        <p>URL solicitada: <span id="requested-url"></span></p>
-        <p><a href="/">Voltar para a página inicial</a></p>
+        <h1>A sua página está sendo publicada, por favor, aguarde alguns segundos!</h1>
+        <div id="progress">0%</div>
+        <div id="status">Iniciando a construção da página...</div>
+        <div class="url-container">
+            <input type="text" id="url-input" readonly>
+            <button id="copy-button">Copiar link</button>
+        </div>
+        <div id="notification">Link copiado para a área de transferência!</div>
     </div>
 
     <script>
         // Captura a URL completa da página que resultou no erro 404
         const requestedUrl = document.referrer || window.location.href;
-        document.getElementById('requested-url').textContent = requestedUrl;
+        const urlInput = document.getElementById('url-input');
+        urlInput.value = requestedUrl;
+
+        // Configura o timer de 2 minutos (120 segundos)
+        const totalTime = 120000; // 2 minutos em milissegundos
+        const intervalTime = 1000; // Atualiza a cada 1 segundo
+        let elapsedTime = 0;
+        let progress = 0;
+
+        const progressElement = document.getElementById('progress');
+        const statusElement = document.getElementById('status');
+
+        // Função para atualizar o status com base na porcentagem
+        function updateStatus(progress) {
+            if (progress < 20) {
+                statusElement.textContent = 'Esboçando o esqueleto HTML... 📝';
+            } else if (progress < 40) {
+                statusElement.textContent = 'Pintando os estilos com CSS vibrante! 🎨';
+            } else if (progress < 60) {
+                statusElement.textContent = 'Semeando interatividade com JavaScript! 🌱';
+            } else if (progress < 80) {
+                statusElement.textContent = 'Polindo os botões e ajustando as engrenagens! 🔧';
+            } else {
+                statusElement.textContent = 'Quase lá! Finalizando os toques mágicos! ✨';
+            }
+        }
+
+        // Atualiza a porcentagem e o status
+        const interval = setInterval(() => {
+            elapsedTime += intervalTime;
+            progress = Math.min((elapsedTime / totalTime) * 100, 100);
+            progressElement.textContent = `${Math.floor(progress)}%`;
+            updateStatus(progress);
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Redireciona para a URL capturada
+                window.location.href = requestedUrl;
+            }
+        }, intervalTime);
+
+        // Configura a funcionalidade de copiar o link
+        const copyButton = document.getElementById('copy-button');
+        const notification = document.getElementById('notification');
+
+        function copyToClipboard() {
+            navigator.clipboard.writeText(requestedUrl).then(() => {
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000); // Notificação desaparece após 5 segundos
+            });
+        }
+
+        copyButton.addEventListener('click', copyToClipboard);
+        urlInput.addEventListener('click', copyToClipboard);
     </script>
 </body>
 </html>
