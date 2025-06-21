@@ -92,8 +92,8 @@
     </div>
 
     <script>
-        // Capture the requested URL from the current location or referrer
-        const requestedUrl = new URLSearchParams(window.location.search).get('url') || document.referrer || window.location.href;
+        // Capture the requested URL directly from the browser's address bar
+        const requestedUrl = window.location.href;
         const urlInput = document.getElementById('url-input');
         urlInput.value = requestedUrl;
 
