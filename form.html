@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Promotor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center min-h-screen">
+    <div id="loader-container" class="hidden fixed inset-0 flex justify-center items-center h-screen bg-gray-50 z-50">
+        <img src="loader-espiral.svg" alt="Carregando..." class="w-20 h-20">
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg relative z-10">
+        <h1 class="text-3xl font-semibold text-gray-800 text-center mb-8">Formulário de Promotor</h1>
+        <div id="notification" class="hidden absolute top-4 left-4 right-4 p-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300" role="alert">
+            <span id="notificationText"></span>
+            <button id="closeNotification" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="successMessage" class="hidden text-center space-y-4">
+            <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
+            <p class="text-gray-700">Seu link personalizado foi gerado:</p>
+            <a id="successLink" href="#" target="_blank" class="text-indigo-600 underline break-all"></a>
+            <button id="copyLinkButton" class="bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+                Copiar Link
+            </button>
+            <p class="text-sm text-gray-500">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar novo link</a></p>
+            <button id="closeSuccess" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <form id="promotorForm" class="space-y-6">
+            <div class="relative">
+                <label for="promotorLink" class="block text-sm font-medium text-gray-700">Link de Promotor</label>
+                <div class="relative">
+                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 pr-20 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
+                    <button type="button" id="pasteLinkButton" class="absolute inset-y-0 right-8 mt-1 mr-2 px-2 py-1 text-xs text-gray-600 hover:text-gray-800">Colar</button>
+                    <span id="linkStatus" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center cursor-pointer">
+                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </span>
+                </div>
+                <p id="linkError" class="mt-1 text-sm text-red-600 hidden"></p>
+            </div>
+            <div class="relative">
+                <label for="whatsappNumber" class="block text-sm font-medium text-gray-700">Número do WhatsApp</label>
+                <div class="flex relative">
+                    <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border">+55</span>
+                    <div class="relative flex-1">
+                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 pr-20 box-border" placeholder="(XX) 9XXXX-XXXX" required>
+                        <button type="button" id="pasteWhatsappButton" class="absolute inset-y-0 right-8 mt-1 mr-2 px-2 py-1 text-xs text-gray-600 hover:text-gray-800">Colar</button>
+                        <span id="whatsappStatus" class="absolute inset-y-0 right-0 mt-1 mr-2 flex items-center cursor-pointer">
+                            <svg id="whatsappIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="submitButton" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 flex items-center justify-center opacity-50 cursor-not-allowed" disabled>
+                <span id="buttonText">Enviar</span>
+                <svg id="spinner" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const promotorLinkInput = document.getElementById('promotorLink');
+        const whatsappNumberInput = document.getElementById('whatsappNumber');
+        const linkStatus = document.getElementById('linkStatus');
+        const whatsappStatus = document.getElementById('whatsappStatus');
+        const linkIcon = document.getElementById('linkIcon');
+        const whatsappIcon = document.getElementById('whatsappIcon');
+        const linkError = document.getElementById('linkError');
+        const submitButton = document.getElementById('submitButton');
+        const buttonText = document.getElementById('buttonText');
+        const spinner = document.getElementById('spinner');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        const closeNotification = document.getElementById('closeNotification');
+        const loaderContainer = document.getElementById('loader-container');
+        const successMessage = document.getElementById('successMessage');
+        const successLink = document.getElementById('successLink');
+        const copyLinkButton = document.getElementById('copyLinkButton');
+        const resetLink = document.getElementById('resetLink');
+        const closeSuccess = document.getElementById('closeSuccess');
+        const pasteLinkButton = document.getElementById('pasteLinkButton');
+        const pasteWhatsappButton = document.getElementById('pasteWhatsappButton');
+        const promotorForm = document.getElementById('promotorForm');
+        let isLinkValid = false;
+        let isWhatsappValid = false;
+        let debounceTimeout;
+
+        // Lista de DDDs válidos no Brasil (11 a 99)
+        const validDDDs = Array.from({ length: 89 }, (_, i) => (i + 11).toString());
+
+        // Função para mostrar notificações (sem fechar automaticamente)
+        function showNotification(message, isError = false) {
+            notificationText.textContent = message;
+            notification.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700', 'opacity-0');
+            notification.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700', 'opacity-100');
+        }
+
+        // Função para validar o link
+        function validateLink() {
+            const link = promotorLinkInput.value.trim();
+            const urlPattern = /^https:\/\/app\.77xbrasil\.com\.br\/pr\/[a-zA-Z0-9]{5,}$/;
+            isLinkValid = urlPattern.test(link);
+            linkIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            linkIcon.innerHTML = isLinkValid
+                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            linkIcon.classList.add(isLinkValid ? 'text-green-500' : link ? 'text-red-500' : 'text-gray-500');
+            promotorLinkInput.classList.remove('border-green-500', 'border-red-500');
+            promotorLinkInput.classList.add(isLinkValid ? 'border-green-500' : link ? 'border-red-500' : 'border-gray-300');
+            linkError.classList.toggle('hidden', isLinkValid || !link);
+            linkError.textContent = link && !isLinkValid ? 'O link deve começar com "https://app.77xbrasil.com.br/pr/" e conter pelo menos 5 caracteres após o prefixo.' : '';
+            linkStatus.style.cursor = (link && !isLinkValid) ? 'pointer' : 'default';
+            updateSubmitButton();
+        }
+
+        // Função para extrair o código do promotor do link
+        function extractPromoterCode(link) {
+            const prefix = 'https://app.77xbrasil.com.br/pr/';
+            if (link.startsWith(prefix)) {
+                return link.slice(prefix.length);
+            }
+            return '';
+        }
+
+        // Função para normalizar número de telefone
+        function normalizePhoneNumber(value) {
+            let digits = value.replace(/\D/g, '');
+            if (digits.startsWith('55')) {
+                digits = digits.slice(2);
+            }
+            return digits;
+        }
+
+        // Função para formatar número de telefone
+        function formatPhoneNumber(digits) {
+            if (digits.length === 0) return '';
+            if (digits.length <= 2) return digits;
+            if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+            if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6, 10)}`;
+            return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+        }
+
+        // Função para validar número de WhatsApp
+        function validatePhoneNumber() {
+            const digits = normalizePhoneNumber(whatsappNumberInput.value);
+            const ddd = digits.slice(0, 2);
+            isWhatsappValid = validDDDs.includes(ddd) && 
+                (digits.length === 10 || (digits.length === 11 && digits[2] === '9'));
+            whatsappIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+            whatsappIcon.innerHTML = isWhatsappValid
+                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+            whatsappIcon.classList.add(isWhatsappValid ? 'text-green-500' : digits ? 'text-red-500' : 'text-gray-500');
+            whatsappNumberInput.classList.remove('border-green-500', 'border-red-500');
+            whatsappNumberInput.classList.add(isWhatsappValid ? 'border-green-500' : digits ? 'border-red-500' : 'border-gray-300');
+            whatsappStatus.style.cursor = (digits && !isWhatsappValid) ? 'pointer' : 'default';
+            updateSubmitButton();
+        }
+
+        // Função para atualizar estado do botão
+        function updateSubmitButton() {
+            if (isLinkValid && isWhatsappValid) {
+                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitButton.classList.add('hover:bg-indigo-700');
+                submitButton.disabled = false;
+            } else {
+                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+                submitButton.classList.remove('hover:bg-indigo-700');
+                submitButton.disabled = true;
+            }
+        }
+
+        // Função de debounce para validações
+        function debounce(func, wait) {
+            return function (...args) {
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // Função para exibir mensagem de sucesso
+        function showSuccessMessage(data) {
+            successLink.textContent = data.htmlPagesUrl;
+            successLink.href = data.htmlPagesUrl;
+            promotorForm.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+        }
+
+        // Função para verificar localStorage ao carregar
+        function checkStoredSuccess() {
+            const storedData = localStorage.getItem('promoterSuccess');
+            if (storedData) {
+                const data = JSON.parse(storedData);
+                showSuccessMessage(data);
+            }
+        }
+
+        // Evento de entrada para o link
+        promotorLinkInput.addEventListener('input', debounce(validateLink, 300));
+
+        // Evento de entrada para o WhatsApp com formatação não intrusiva
+        whatsappNumberInput.addEventListener('input', (e) => {
+            const cursorPosition = e.target.selectionStart;
+            const originalLength = e.target.value.length;
+            const normalized = normalizePhoneNumber(e.target.value);
+            const formatted = formatPhoneNumber(normalized);
+            e.target.value = formatted;
+
+            const newLength = formatted.length;
+            const cursorOffset = newLength - originalLength;
+            const newCursorPosition = Math.max(0, cursorPosition + cursorOffset);
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+            debounce(validatePhoneNumber, 300)();
+        });
+
+        // Detecta preenchimento automático
+        whatsappNumberInput.addEventListener('change', () => {
+            const normalized = normalizePhoneNumber(whatsappNumberInput.value);
+            whatsappNumberInput.value = formatPhoneNumber(normalized);
+            validatePhoneNumber();
+        });
+
+        // Botão Colar para o link
+        pasteLinkButton.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                promotorLinkInput.value = text;
+                validateLink();
+            } catch (error) {
+                showNotification('Erro ao colar o link.', true);
+            }
+        });
+
+        // Botão Colar para o WhatsApp
+        pasteWhatsappButton.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                whatsappNumberInput.value = formatPhoneNumber(normalizePhoneNumber(text));
+                validatePhoneNumber();
+            } catch (error) {
+                showNotification('Erro ao colar o número.', true);
+            }
+        });
+
+        // Limpar campo de link ao clicar no "X" (quando inválido)
+        linkStatus.addEventListener('click', () => {
+            if (!isLinkValid && promotorLinkInput.value.trim()) {
+                promotorLinkInput.value = '';
+                validateLink();
+            }
+        });
+
+        // Limpar campo de WhatsApp ao clicar no "X" (quando inválido)
+        whatsappStatus.addEventListener('click', () => {
+            if (!isWhatsappValid && whatsappNumberInput.value.trim()) {
+                whatsappNumberInput.value = '';
+                validatePhoneNumber();
+            }
+        });
+
+        // Fechar notificação manualmente
+        closeNotification.addEventListener('click', () => {
+            notification.classList.add('opacity-0');
+            setTimeout(() => notification.classList.add('hidden'), 300);
+        });
+
+        // Copiar link para a área de transferência
+        copyLinkButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(successLink.textContent);
+                showNotification('Link copiado para a área de transferência!');
+            } catch (error) {
+                showNotification('Erro ao copiar o link.', true);
+            }
+        });
+
+        // Fechar mensagem de sucesso
+        closeSuccess.addEventListener('click', () => {
+            successMessage.classList.add('hidden');
+            promotorForm.classList.remove('hidden');
+        });
+
+        // Resetar para criar novo link
+        resetLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('promoterSuccess');
+            window.location.reload();
+        });
+
+        // Envio do formulário
+        promotorForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            buttonText.textContent = 'Enviando...';
+            spinner.classList.remove('hidden');
+            submitButton.disabled = true;
+            loaderContainer.classList.remove('hidden');
+
+            const promoterCode = extractPromoterCode(promotorLinkInput.value);
+            const whatsappNumber = '+55' + normalizePhoneNumber(whatsappNumberInput.value);
+
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbxYojoON2RpbvfayaYcCvpgAB1p2MAk5d_tWRk2fco_uvkMbPIgh8SEomsdCmodb1RJbA/exec';
+
+            try {
+                // Enviar a requisição POST
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ promoterCode, whatsappNumber }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    const requestId = result.requestId;
+
+                    // Exibir notificação inicial
+                    showNotification('Requisição enviada. Aguardando processamento...');
+
+                    // Iniciar polling automático a cada 60 segundos
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            const statusResponse = await fetch(`${scriptUrl}?requestId=${requestId}`, {
+                                method: 'GET',
+                                mode: 'cors'
+                            });
+                            const statusResult = await statusResponse.json();
+
+                            if (statusResult.status === 'completed') {
+                                clearInterval(pollInterval);
+                                const successData = {
+                                    promoterCode: statusResult.result.promoterCode,
+                                    formattedWhatsapp: statusResult.result.formattedWhatsapp,
+                                    htmlPagesUrl: statusResult.result.htmlPagesUrl
+                                };
+                                localStorage.setItem('promoterSuccess', JSON.stringify(successData));
+                                showSuccessMessage(successData);
+                                buttonText.textContent = 'Enviar';
+                                spinner.classList.add('hidden');
+                                loaderContainer.classList.add('hidden');
+                                updateSubmitButton();
+                            } else if (statusResult.status === 'error') {
+                                clearInterval(pollInterval);
+                                showNotification(`Erro: ${statusResult.error}`, true);
+                                buttonText.textContent = 'Enviar';
+                                spinner.classList.add('hidden');
+                                loaderContainer.classList.add('hidden');
+                                updateSubmitButton();
+                            }
+                        } catch (error) {
+                            clearInterval(pollInterval);
+                            showNotification('Erro ao consultar status. Tente novamente.', true);
+                            buttonText.textContent = 'Enviar';
+                            spinner.classList.add('hidden');
+                            loaderContainer.classList.add('hidden');
+                            updateSubmitButton();
+                        }
+                    }, 60000); // Verifica a cada 60 segundos
+                } else {
+                    throw new Error('Erro na requisição');
+                }
+            } catch (error) {
+                showNotification('Erro ao enviar os dados. Tente novamente.', true);
+                buttonText.textContent = 'Enviar';
+                spinner.classList.add('hidden');
+                loaderContainer.classList.add('hidden');
+                updateSubmitButton();
+            }
+        });
+
+        // Verificar localStorage ao carregar a página
+        checkStoredSuccess();
+
+        // Foco inicial no campo de link
+        promotorLinkInput.focus();
+    </script>
+</body>
+</html>
