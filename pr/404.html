@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Não Encontrada</title>
+    <title>Página Não Encontrada - PR</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,15 +34,14 @@
     </style>
 </head>
 <body>
-    <h1>404</h1>
+    <h1>404 - Subdiretório PR</h1>
     <p>Página Não Encontrada</p>
-    <p>A URL solicitada <span id="requested-url"></span> não foi encontrada neste servidor.</p>
-    <p><a href="/">Voltar para a página inicial</a></p>
+    <p>A URL solicitada <span id="requested-url"></span> não foi encontrada.</p>
+    <p><a href="/pr/">Voltar para a página inicial do PR</a></p>
+    <p><a href="/">Voltar para a página inicial do site</a></p>
 
     <script>
-        // Captura a URL que causou o redirecionamento
         const requestedUrl = window.location.href;
-        // Exibe a URL no elemento span
         document.getElementById('requested-url').textContent = requestedUrl;
     </script>
 </body>
