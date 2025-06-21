@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404 - Página Não Encontrada</h1>
+        <p>Desculpe, mas a página que você tentou acessar não existe.</p>
+        <p>URL solicitada: <span id="requested-url"></span></p>
+        <p><a href="/">Voltar para a página inicial</a></p>
+    </div>
+
+    <script>
+        // Captura a URL completa da página que resultou no erro 404
+        const requestedUrl = document.referrer || window.location.href;
+        document.getElementById('requested-url').textContent = requestedUrl;
+    </script>
+</body>
+</html>
