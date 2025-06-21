@@ -1,1 +1,49 @@
-teste
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Não Encontrada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>404</h1>
+    <p>Página Não Encontrada</p>
+    <p>A URL solicitada <span id="requested-url"></span> não foi encontrada neste servidor.</p>
+    <p><a href="/">Voltar para a página inicial</a></p>
+
+    <script>
+        // Captura a URL que causou o redirecionamento
+        const requestedUrl = window.location.href;
+        // Exibe a URL no elemento span
+        document.getElementById('requested-url').textContent = requestedUrl;
+    </script>
+</body>
+</html>
