@@ -92,21 +92,21 @@
     </div>
 
     <script>
-        // Captura a URL completa da página que resultou no erro 404
-        const requestedUrl = document.referrer || window.location.href;
+        // Capture the requested URL from the current location or referrer
+        const requestedUrl = new URLSearchParams(window.location.search).get('url') || document.referrer || window.location.href;
         const urlInput = document.getElementById('url-input');
         urlInput.value = requestedUrl;
 
-        // Configura o timer de 2 minutos (120 segundos)
-        const totalTime = 120000; // 2 minutos em milissegundos
-        const intervalTime = 1000; // Atualiza a cada 1 segundo
+        // Configure the 2-minute timer (120 seconds)
+        const totalTime = 120000; // 2 minutes in milliseconds
+        const intervalTime = 1000; // Update every 1 second
         let elapsedTime = 0;
         let progress = 0;
 
         const progressElement = document.getElementById('progress');
         const statusElement = document.getElementById('status');
 
-        // Função para atualizar o status com base na porcentagem
+        // Update status based on progress percentage
         function updateStatus(progress) {
             if (progress < 20) {
                 statusElement.textContent = 'Esboçando o esqueleto HTML... 📝';
@@ -121,7 +121,7 @@
             }
         }
 
-        // Atualiza a porcentagem e o status
+        // Update progress and status
         const interval = setInterval(() => {
             elapsedTime += intervalTime;
             progress = Math.min((elapsedTime / totalTime) * 100, 100);
@@ -130,12 +130,12 @@
 
             if (progress >= 100) {
                 clearInterval(interval);
-                // Redireciona para a URL capturada
-                window.location.href = requestedUrl;
+                // Redirect to the exact requested URL
+                window.location.assign(requestedUrl);
             }
         }, intervalTime);
 
-        // Configura a funcionalidade de copiar o link
+        // Configure copy link functionality
         const copyButton = document.getElementById('copy-button');
         const notification = document.getElementById('notification');
 
@@ -144,7 +144,7 @@
                 notification.classList.add('show');
                 setTimeout(() => {
                     notification.classList.remove('show');
-                }, 5000); // Notificação desaparece após 5 segundos
+                }, 5000); // Notification disappears after 5 seconds
             });
         }
 
