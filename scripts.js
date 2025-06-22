@@ -26,9 +26,3 @@ function setupSectionAnimations() {
         window.addEventListener('load', () => handleSectionVisibility(sectionId));
     });
 }
-
-/* Initialize on Page Load */
-document.addEventListener('DOMContentLoaded', () => {
-    updateLinksBasedOnReferrer();
-    setupSectionAnimations();
-});
