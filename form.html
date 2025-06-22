@@ -168,338 +168,335 @@
         </form>
     </div>
 
-    <script>
-        const promotorLinkInput = document.getElementById('promotorLink');
-        const whatsappNumberInput = document.getElementById('whatsappNumber');
-        const linkStatus = document.getElementById('linkStatus');
-        const whatsappStatus = document.getElementById('whatsappStatus');
-        const linkIcon = document.getElementById('linkIcon');
-        const whatsappIcon = document.getElementById('whatsappIcon');
-        const linkError = document.getElementById('linkError');
-        const submitButton = document.getElementById('submitButton');
-        const buttonText = document.getElementById('buttonText');
-        const spinner = document.getElementById('spinner');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
-        const closeNotification = document.getElementById('closeNotification');
-        const loaderContainer = document.getElementById('loader-container');
-        const statusMessage = document.getElementById('status-message');
-        const successMessage = document.getElementById('successMessage');
-        const successLink = document.getElementById('successLink');
-        const copyLinkButton = document.getElementById('copyLinkButton');
-        const openLink = document.getElementById('openLink');
-        const resetLink = document.getElementById('resetLink');
-        const pasteLinkButton = document.getElementById('pasteLinkButton');
-        const pasteWhatsappButton = document.getElementById('pasteWhatsappButton');
-        const promotorForm = document.getElementById('promotorForm');
-        let isLinkValid = false;
-        let isWhatsappValid = false;
-        let debounceTimeout;
-        let notificationTimeout;
+<script>
+    const promotorLinkInput = document.getElementById('promotorLink');
+    const whatsappNumberInput = document.getElementById('whatsappNumber');
+    const linkStatus = document.getElementById('linkStatus');
+    const whatsappStatus = document.getElementById('whatsappStatus');
+    const linkIcon = document.getElementById('linkIcon');
+    const whatsappIcon = document.getElementById('whatsappIcon');
+    const linkError = document.getElementById('linkError');
+    const submitButton = document.getElementById('submitButton');
+    const buttonText = document.getElementById('buttonText');
+    const spinner = document.getElementById('spinner');
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+    const closeNotification = document.getElementById('closeNotification');
+    const loaderContainer = document.getElementById('loader-container');
+    const statusMessage = document.getElementById('status-message');
+    const successMessage = document.getElementById('successMessage');
+    const successLink = document.getElementById('successLink');
+    const copyLinkButton = document.getElementById('copyLinkButton');
+    const openLink = document.getElementById('openLink');
+    const resetLink = document.getElementById('resetLink');
+    const pasteLinkButton = document.getElementById('pasteLinkButton');
+    const pasteWhatsappButton = document.getElementById('pasteWhatsappButton');
+    const promotorForm = document.getElementById('promotorForm');
+    let isLinkValid = false;
+    let isWhatsappValid = false;
+    let debounceTimeout;
+    let notificationTimeout;
 
-        // Lista de DDDs válidos no Brasil (11 a 99)
-        const validDDDs = Array.from({ length: 89 }, (_, i) => (i + 11).toString());
+    // Lista de DDDs válidos no Brasil (11 a 99)
+    const validDDDs = Array.from({ length: 89 }, (_, i) => (i + 11).toString());
 
-        // Função para mostrar notificações com auto-fechamento
-        function showNotification(message, isError = false) {
-            // Limpar timeout anterior, se existir
-            if (notificationTimeout) {
-                clearTimeout(notificationTimeout);
-            }
-            notificationText.textContent = message;
-            notification.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700', 'opacity-0');
-            notification.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700', 'opacity-100');
-            // Auto-fechamento após 10 segundos
-            notificationTimeout = setTimeout(() => {
-                notification.classList.add('opacity-0');
-                setTimeout(() => notification.classList.add('hidden'), 300);
-            }, 10000);
-        }
-
-        // Função para exibir mensagens de status dinâmicas
-        function showStatusMessages() {
-            const messages = [
-                'Conectando ao servidor...',
-                'Enviando dados...',
-                'Gerando sua página...'
-            ];
-            let index = 0;
-            statusMessage.textContent = messages[0];
-            const interval = setInterval(() => {
-                if (index < messages.length - 1) {
-                    index++;
-                    statusMessage.textContent = messages[index];
-                }
-            }, 5000);
-            return () => clearInterval(interval);
-        }
-
-        // Função para validar o link
-        function validateLink() {
-            const link = promotorLinkInput.value.trim();
-            const urlPattern = /^https:\/\/app\.77xbrasil\.com\.br\/pr\/[a-zA-Z0-9]{5,}$/;
-            isLinkValid = urlPattern.test(link);
-            linkIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
-            linkIcon.innerHTML = isLinkValid
-                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
-                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-            linkIcon.classList.add(isLinkValid ? 'text-green-500' : link ? 'text-red-500' : 'text-gray-500');
-            promotorLinkInput.classList.remove('border-green-500', 'border-red-500');
-            promotorLinkInput.classList.add(isLinkValid ? 'border-green-500' : link ? 'border-red-500' : 'border-gray-300');
-            linkError.classList.toggle('hidden', isLinkValid || !link);
-            linkError.textContent = link && !isLinkValid ? 'O link deve começar com "https://app.77xbrasil.com.br/pr/" e conter pelo menos 5 caracteres após o prefixo.' : '';
-            linkStatus.style.cursor = (link && !isLinkValid) ? 'pointer' : 'default';
-            updateSubmitButton();
-        }
-
-        // Função para extrair o código do promotor do link
-        function extractPromoterCode(link) {
-            const prefix = 'https://app.77xbrasil.com.br/pr/';
-            if (link.startsWith(prefix)) {
-                return link.slice(prefix.length);
-            }
-            return '';
-        }
-
-        // Função para normalizar número de telefone
-        function normalizePhoneNumber(value) {
-            let digits = value.replace(/\D/g, '');
-            if (digits.startsWith('55')) {
-                digits = digits.slice(2);
-            }
-            return digits;
-        }
-
-        // Função para formatar número de telefone
-        function formatPhoneNumber(digits) {
-            if (digits.length === 0) return '';
-            if (digits.length <= 2) return digits;
-            if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-            if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6, 10)}`;
-            return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
-        }
-
-        // Função para validar número de WhatsApp
-        function validatePhoneNumber() {
-            const digits = normalizePhoneNumber(whatsappNumberInput.value);
-            const ddd = digits.slice(0, 2);
-            isWhatsappValid = validDDDs.includes(ddd) && 
-                (digits.length === 10 || (digits.length === 11 && digits[2] === '9'));
-            whatsappIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
-            whatsappIcon.innerHTML = isWhatsappValid
-                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
-                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-            whatsappIcon.classList.add(isWhatsappValid ? 'text-green-500' : digits ? 'text-red-500' : 'text-gray-500');
-            whatsappNumberInput.classList.remove('border-green-500', 'border-red-500');
-            whatsappNumberInput.classList.add(isWhatsappValid ? 'border-green-500' : digits ? 'border-red-500' : 'border-gray-300');
-            whatsappStatus.style.cursor = (digits && !isWhatsappValid) ? 'pointer' : 'default';
-            updateSubmitButton();
-        }
-
-        // Função para atualizar estado do botão
-        function updateSubmitButton() {
-            if (isLinkValid && isWhatsappValid) {
-                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
-                submitButton.classList.add('hover:bg-indigo-700');
-                submitButton.disabled = false;
-            } else {
-                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-                submitButton.classList.remove('hover:bg-indigo-700');
-                submitButton.disabled = true;
-            }
-        }
-
-        // Função de debounce para validações
-        function debounce(func, wait) {
-            return function (...args) {
-                clearTimeout(debounceTimeout);
-                debounceTimeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
-
-        // Função para exibir mensagem de sucesso
-        function showSuccessMessage(data) {
-            successLink.value = data.htmlPagesUrl;
-            openLink.href = data.htmlPagesUrl;
-            promotorForm.classList.add('hidden');
-            successMessage.classList.remove('hidden');
-        }
-
-        // Função para enviar requisição com retry
-        async function sendRequest(data, retries = 1) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
-                const response = await fetch(proxyUrl, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
-                    signal: controller.signal,
-                });
-                clearTimeout(timeoutId);
-                if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
-                return await response.json();
-            } catch (error) {
-                if (retries > 0 && (error.name === 'AbortError' || error.message.includes('timeout'))) {
-                    showNotification('Aguarde, o servidor está iniciando...', false);
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-                    return sendRequest(data, retries - 1);
-                }
-                throw error;
-            }
-        }
-
-        // Função para verificar localStorage ao carregar
-        function checkStoredSuccess() {
-            const storedData = localStorage.getItem('promoterSuccess');
-            if (storedData) {
-                const data = JSON.parse(storedData);
-                showSuccessMessage(data);
-            }
-        }
-
-        // Evento de entrada para o link
-        promotorLinkInput.addEventListener('input', debounce(validateLink, 300));
-
-        // Evento de entrada para o WhatsApp com formatação não intrusiva
-        whatsappNumberInput.addEventListener('input', (e) => {
-            const cursorPosition = e.target.selectionStart;
-            const originalLength = e.target.value.length;
-            const normalized = normalizePhoneNumber(e.target.value);
-            const formatted = formatPhoneNumber(normalized);
-            e.target.value = formatted;
-
-            const newLength = formatted.length;
-            const cursorOffset = newLength - originalLength;
-            const newCursorPosition = Math.max(0, cursorPosition + cursorOffset);
-            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-
-            debounce(validatePhoneNumber, 300)();
-        });
-
-        // Detecta preenchimento automático
-        whatsappNumberInput.addEventListener('change', () => {
-            const normalized = normalizePhoneNumber(whatsappNumberInput.value);
-            whatsappNumberInput.value = formatPhoneNumber(normalized);
-            validatePhoneNumber();
-        });
-
-        // Botão Colar para o link
-        pasteLinkButton.addEventListener('click', async () => {
-            try {
-                const text = await navigator.clipboard.readText();
-                promotorLinkInput.value = text;
-                validateLink();
-            } catch (error) {
-                showNotification('Erro ao colar o link.', true);
-            }
-        });
-
-        // Botão Colar para o WhatsApp
-        pasteWhatsappButton.addEventListener('click', async () => {
-            try {
-                const text = await navigator.clipboard.readText();
-                whatsappNumberInput.value = formatPhoneNumber(normalizePhoneNumber(text));
-                validatePhoneNumber();
-            } catch (error) {
-                showNotification('Erro ao colar o número.', true);
-            }
-        });
-
-        // Limpar campo de link ao clicar no "X" (quando inválido)
-        linkStatus.addEventListener('click', () => {
-            if (!isLinkValid && promotorLinkInput.value.trim()) {
-                promotorLinkInput.value = '';
-                validateLink();
-            }
-        });
-
-        // Limpar campo de WhatsApp ao clicar no "X" (quando inválido)
-        whatsappStatus.addEventListener('click', () => {
-            if (!isWhatsappValid && whatsappNumberInput.value.trim()) {
-                whatsappNumberInput.value = '';
-                validatePhoneNumber();
-            }
-        });
-
-        // Fechar notificação manualmente
-        closeNotification.addEventListener('click', () => {
+    // Função para mostrar notificações com auto-fechamento
+    function showNotification(message, isError = false) {
+        if (notificationTimeout) {
             clearTimeout(notificationTimeout);
+        }
+        notificationText.textContent = message;
+        notification.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700', 'opacity-0');
+        notification.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700', 'opacity-100');
+        notificationTimeout = setTimeout(() => {
             notification.classList.add('opacity-0');
             setTimeout(() => notification.classList.add('hidden'), 300);
-        });
+        }, 10000);
+    }
 
-        // Botão Copiar Link e clique no input
-        function copyLinkToClipboard() {
-            navigator.clipboard.writeText(successLink.value).then(() => {
-                showNotification('Link copiado!', false);
-            }).catch(() => {
-                showNotification('Erro ao copiar o link.', true);
-            });
-        }
-
-        copyLinkButton.addEventListener('click', copyLinkToClipboard);
-        successLink.addEventListener('click', copyLinkToClipboard);
-
-        // Resetar para criar nova página
-        resetLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('promoterSuccess');
-            promotorForm.classList.remove('hidden');
-            successMessage.classList.add('hidden');
-            promotorLinkInput.value = '';
-            whatsappNumberInput.value = '';
-            validateLink();
-            validatePhoneNumber();
-        });
-
-        // Envio do formulário
-        const proxyUrl = 'https://proxy-77xbrasil.onrender.com/proxy';
-        promotorForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            buttonText.textContent = 'Enviando...';
-            spinner.classList.remove('hidden');
-            submitButton.disabled = true;
-            loaderContainer.classList.remove('hidden');
-            const clearStatusMessages = showStatusMessages();
-
-            const promoterCode = extractPromoterCode(promotorLinkInput.value);
-            const whatsappNumber = '+55' + normalizePhoneNumber(whatsappNumberInput.value);
-
-            try {
-                const result = await sendRequest({ promoterCode, whatsappNumber });
-                clearStatusMessages();
-                if (result.status === 'completed') {
-                    const successData = result.result;
-                    localStorage.setItem('promoterSuccess', JSON.stringify(successData));
-                    showSuccessMessage(successData);
-                    showNotification('Página criada com sucesso!', false);
-                } else {
-                    throw new Error(result.error || 'Erro desconhecido ao processar a requisição');
-                }
-            } catch (error) {
-                let errorMessage = 'Erro ao enviar os dados. Tente novamente.';
-                if (error.message.includes('403')) {
-                    errorMessage = 'Falha ao acessar o servidor. Verifique a conexão e tente novamente.';
-                } else if (error.name === 'AbortError') {
-                    errorMessage = 'A requisição demorou muito para responder. Tente novamente.';
-                }
-                showNotification(errorMessage, true);
-            } finally {
-                buttonText.textContent = 'Enviar';
-                spinner.classList.add('hidden');
-                loaderContainer.classList.add('hidden');
-                submitButton.disabled = false;
-                updateSubmitButton();
+    // Função para exibir mensagens de status dinâmicas
+    function showStatusMessages() {
+        const messages = [
+            'Conectando ao servidor...',
+            'Enviando dados...',
+            'Gerando sua página...'
+        ];
+        let index = 0;
+        statusMessage.textContent = messages[0];
+        const interval = setInterval(() => {
+            if (index < messages.length - 1) {
+                index++;
+                statusMessage.textContent = messages[index];
             }
+        }, 5000);
+        return () => clearInterval(interval);
+    }
+
+    // Função para validar o link
+    function validateLink() {
+        const link = promotorLinkInput.value.trim();
+        const urlPattern = /^https:\/\/app\.77xbrasil\.com\.br\/pr\/[a-zA-Z0-9]{5,}$/;
+        isLinkValid = urlPattern.test(link);
+        linkIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+        linkIcon.innerHTML = isLinkValid
+            ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+            : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        linkIcon.classList.add(isLinkValid ? 'text-green-500' : link ? 'text-red-500' : 'text-gray-500');
+        promotorLinkInput.classList.remove('border-green-500', 'border-red-500');
+        promotorLinkInput.classList.add(isLinkValid ? 'border-green-500' : link ? 'border-red-500' : 'border-gray-300');
+        linkError.classList.toggle('hidden', isLinkValid || !link);
+        linkError.textContent = link && !isLinkValid ? 'O link deve começar com "https://app.77xbrasil.com.br/pr/" e conter pelo menos 5 caracteres após o prefixo.' : '';
+        linkStatus.style.cursor = (link && !isLinkValid) ? 'pointer' : 'default';
+        updateSubmitButton();
+    }
+
+    // Função para extrair o código do promotor do link
+    function extractPromoterCode(link) {
+        const prefix = 'https://app.77xbrasil.com.br/pr/';
+        if (link.startsWith(prefix)) {
+            return link.slice(prefix.length);
+        }
+        return '';
+    }
+
+    // Função para normalizar número de telefone
+    function normalizePhoneNumber(value) {
+        let digits = value.replace(/\D/g, '');
+        if (digits.startsWith('55')) {
+            digits = digits.slice(2);
+        }
+        return digits;
+    }
+
+    // Função para formatar número de telefone
+    function formatPhoneNumber(digits) {
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) return digits;
+        if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+        if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6, 10)}`;
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+    }
+
+    // Função para validar número de WhatsApp
+    function validatePhoneNumber() {
+        const digits = normalizePhoneNumber(whatsappNumberInput.value);
+        const ddd = digits.slice(0, 2);
+        isWhatsappValid = validDDDs.includes(ddd) && 
+            (digits.length === 10 || (digits.length === 11 && digits[2] === '9'));
+        whatsappIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+        whatsappIcon.innerHTML = isWhatsappValid
+            ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+            : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        whatsappIcon.classList.add(isWhatsappValid ? 'text-green-500' : digits ? 'text-red-500' : 'text-gray-500');
+        whatsappNumberInput.classList.remove('border-green-500', 'border-red-500');
+        whatsappNumberInput.classList.add(isWhatsappValid ? 'border-green-500' : digits ? 'border-red-500' : 'border-gray-300');
+        whatsappStatus.style.cursor = (digits && !isWhatsappValid) ? 'pointer' : 'default';
+        updateSubmitButton();
+    }
+
+    // Função para atualizar estado do botão
+    function updateSubmitButton() {
+        if (isLinkValid && isWhatsappValid) {
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.add('hover:bg-indigo-700');
+            submitButton.disabled = false;
+        } else {
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.remove('hover:bg-indigo-700');
+            submitButton.disabled = true;
+        }
+    }
+
+    // Função de debounce para validações
+    function debounce(func, wait) {
+        return function (...args) {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    // Função para exibir mensagem de sucesso
+    function showSuccessMessage(data) {
+        successLink.value = data.htmlPagesUrl;
+        openLink.href = data.htmlPagesUrl;
+        promotorForm.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+    }
+
+    // Função para enviar requisição com retry
+    async function sendRequest(data, retries = 1) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 15000);
+            const response = await fetch('https://proxy-77xbrasil.onrender.com/proxy', {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                signal: controller.signal,
+            });
+            clearTimeout(timeoutId);
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+            const result = await response.json();
+            if (result.error) throw new Error(result.error);
+            return result;
+        } catch (error) {
+            if (retries > 0 && (error.name === 'AbortError' || error.message.includes('timeout'))) {
+                showNotification('Aguarde, o servidor está iniciando...', false);
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                return sendRequest(data, retries - 1);
+            }
+            throw error;
+        }
+    }
+
+    // Função para verificar localStorage ao carregar
+    function checkStoredSuccess() {
+        const storedData = localStorage.getItem('promoterSuccess');
+        if (storedData) {
+            const data = JSON.parse(storedData);
+            showSuccessMessage(data);
+        }
+    }
+
+    // Evento de entrada para o link
+    promotorLinkInput.addEventListener('input', debounce(validateLink, 300));
+
+    // Evento de entrada para o WhatsApp com formatação não intrusiva
+    whatsappNumberInput.addEventListener('input', (e) => {
+        const cursorPosition = e.target.selectionStart;
+        const originalLength = e.target.value.length;
+        const normalized = normalizePhoneNumber(e.target.value);
+        const formatted = formatPhoneNumber(normalized);
+        e.target.value = formatted;
+
+        const newLength = formatted.length;
+        const cursorOffset = newLength - originalLength;
+        const newCursorPosition = Math.max(0, cursorPosition + cursorOffset);
+        e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+        debounce(validatePhoneNumber, 300)();
+    });
+
+    // Detecta preenchimento automático
+    whatsappNumberInput.addEventListener('change', () => {
+        const normalized = normalizePhoneNumber(whatsappNumberInput.value);
+        whatsappNumberInput.value = formatPhoneNumber(normalized);
+        validatePhoneNumber();
+    });
+
+    // Botão Colar para o link
+    pasteLinkButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            promotorLinkInput.value = text;
+            validateLink();
+        } catch (error) {
+            showNotification('Erro ao colar o link.', true);
+        }
+    });
+
+    // Botão Colar para o WhatsApp
+    pasteWhatsappButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            whatsappNumberInput.value = formatPhoneNumber(normalizePhoneNumber(text));
+            validatePhoneNumber();
+        } catch (error) {
+            showNotification('Erro ao colar o número.', true);
+        }
+    });
+
+    // Limpar campo de link ao clicar no "X" (quando inválido)
+    linkStatus.addEventListener('click', () => {
+        if (!isLinkValid && promotorLinkInput.value.trim()) {
+            promotorLinkInput.value = '';
+            validateLink();
+        }
+    });
+
+    // Limpar campo de WhatsApp ao clicar no "X" (quando inválido)
+    whatsappStatus.addEventListener('click', () => {
+        if (!isWhatsappValid && whatsappNumberInput.value.trim()) {
+            whatsappNumberInput.value = '';
+            validatePhoneNumber();
+        }
+    });
+
+    // Fechar notificação manualmente
+    closeNotification.addEventListener('click', () => {
+        clearTimeout(notificationTimeout);
+        notification.classList.add('opacity-0');
+        setTimeout(() => notification.classList.add('hidden'), 300);
+    });
+
+    // Botão Copiar Link e clique no input
+    function copyLinkToClipboard() {
+        navigator.clipboard.writeText(successLink.value).then(() => {
+            showNotification('Link copiado!', false);
+        }).catch(() => {
+            showNotification('Erro ao copiar o link.', true);
         });
+    }
 
-        // Verificar localStorage ao carregar a página
-        checkStoredSuccess();
+    copyLinkButton.addEventListener('click', copyLinkToClipboard);
+    successLink.addEventListener('click', copyLinkToClipboard);
 
-        // Foco inicial no campo de link
-        promotorLinkInput.focus();
-    </script>
+    // Resetar para criar nova página
+    resetLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('promoterSuccess');
+        promotorForm.classList.remove('hidden');
+        successMessage.classList.add('hidden');
+        promotorLinkInput.value = '';
+        whatsappNumberInput.value = '';
+        validateLink();
+        validatePhoneNumber();
+    });
+
+    // Envio do formulário
+    promotorForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        buttonText.textContent = 'Enviando...';
+        spinner.classList.remove('hidden');
+        submitButton.disabled = true;
+        loaderContainer.classList.remove('hidden');
+        const clearStatusMessages = showStatusMessages();
+
+        const promoterCode = extractPromoterCode(promotorLinkInput.value);
+        const whatsappNumber = normalizePhoneNumber(whatsappNumberInput.value); // Sem +55
+
+        try {
+            const result = await sendRequest({ promoterCode, whatsappNumber });
+            clearStatusMessages();
+            localStorage.setItem('promoterSuccess', JSON.stringify(result));
+            showSuccessMessage(result);
+            showNotification('Página criada com sucesso!', false);
+        } catch (error) {
+            let errorMessage = 'Erro ao enviar os dados. Tente novamente.';
+            if (error.message.includes('403')) {
+                errorMessage = 'Falha ao acessar o servidor. Verifique a conexão.';
+            } else if (error.name === 'AbortError') {
+                errorMessage = 'A requisição demorou muito para responder.';
+            } else if (error.message.includes('Invalid JSON response')) {
+                errorMessage = 'Erro no servidor. Resposta inválida recebida.';
+            }
+            showNotification(errorMessage, true);
+            console.error('Erro na requisição:', error);
+        } finally {
+            buttonText.textContent = 'Enviar';
+            spinner.classList.add('hidden');
+            loaderContainer.classList.add('hidden');
+            submitButton.disabled = false;
+            updateSubmitButton();
+        }
+    });
+
+    // Verificar localStorage ao carregar
+    checkStoredSuccess();
+
+    // Foco inicial no campo de link
+    promotorLinkInput.focus();
+</script>
 </body>
 </html>
