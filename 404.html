@@ -29,11 +29,6 @@
             padding: 2rem;
             max-width: 90%;
             width: 500px;
-            animation: fadeIn 1s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         h1 {
             font-size: clamp(1.5rem, 5vw, 2rem);
@@ -41,72 +36,11 @@
             margin-bottom: 1.5rem;
             line-height: 1.3;
         }
-        .loading-container {
-            margin: 1.5rem 0;
-        }
-        #dots {
-            font-size: 0;
-        }
-        .dot {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background-color: #10b981;
-            border-radius: 50%;
-            margin: 0 6px;
-            opacity: 0.3;
-            animation: bounce 1.5s infinite;
-        }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        .dot.active {
-            opacity: 1;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .url-container {
-            position: relative;
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-        #url-input {
-            width: 100%;
-            padding: 0.75rem 2.5rem 0.75rem 0.75rem;
-            font-size: clamp(0.875rem, 3vw, 1rem);
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            background-color: #f9fafb;
-            outline: none;
-        }
-        #copy-icon {
-            position: absolute;
-            right: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        #copy-icon:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-        #notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 0.75rem 1.5rem;
-            background-color: #10b981;
-            color: white;
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.5s;
-            font-size: clamp(0.875rem, 3vw, 1rem);
-        }
-        #notification.show {
-            opacity: 1;
+        .loader-img {
+            display: block;
+            margin: 0 auto;
+            width: 100px;
+            height: auto;
         }
         @media (max-width: 600px) {
             .container {
@@ -116,17 +50,8 @@
             h1 {
                 font-size: clamp(1.25rem, 6vw, 1.75rem);
             }
-            .dot {
-                width: 12px;
-                height: 12px;
-                margin: 0 4px;
-            }
-            #url-input {
-                padding: 0.75rem 2rem 0.75rem 0.75rem;
-            }
-            #copy-icon {
-                width: 20px;
-                height: 20px;
+            .loader-img {
+                width: 80px;
             }
         }
     </style>
@@ -134,68 +59,14 @@
 <body>
     <div class="container">
         <h1>A sua página está sendo publicada, por favor, aguarde alguns segundos!</h1>
-        <div class="loading-container">
-            <div id="dots">
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-        <div class="url-container">
-            <input type="text" id="url-input" readonly>
-            <img id="copy-icon" src="form_img/copiar.svg" alt="Copiar link">
-        </div>
-        <div id="notification">Link copiado para a área de transferência!</div>
+        <img src="form_img/minhoca-loader.svg" alt="Carregando" class="loader-img">
     </div>
 
     <script>
-        // Capture the requested URL directly from the browser's address bar
-        const requestedUrl = window.location.href;
-        const urlInput = document.getElementById('url-input');
-        urlInput.value = requestedUrl;
-
-        // Dot animation cycle
-        const dots = document.querySelectorAll('.dot');
-        let dotIndex = 0;
-
-        setInterval(() => {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === dotIndex);
-            });
-            dotIndex = (dotIndex + 1) % dots.length;
-        }, 500);
-
-        // Check URL availability every 10 seconds
-        function checkUrl() {
-            fetch(requestedUrl, { method: 'HEAD', mode: 'no-cors' })
-                .then(() => {
-                    // Attempt to reload the page
-                    window.location.assign(requestedUrl);
-                })
-                .catch(() => {
-                    // URL still unavailable, continue checking
-                });
-        }
-
-        // Start checking immediately and repeat every 10 seconds
-        checkUrl();
-        setInterval(checkUrl, 10000);
-
-        // Configure copy link functionality
-        const copyIcon = document.getElementById('copy-icon');
-        const notification = document.getElementById('notification');
-
-        function copyToClipboard() {
-            navigator.clipboard.writeText(requestedUrl).then(() => {
-                notification.classList.add('show');
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 5000); // Notification disappears after 5 seconds
-            });
-        }
-
-        copyIcon.addEventListener('click', copyToClipboard);
-        urlInput.addEventListener('click', copyToClipboard);
+        // Recarrega a página a cada 15 segundos
+        setTimeout(() => {
+            window.location.reload();
+        }, 15000);
     </script>
 </body>
 </html>
