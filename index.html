@@ -185,5 +185,12 @@
 
     <!-- External JavaScript -->
     <script src="scripts.js"></script>
+<script>
+/* Initialize on Page Load */
+document.addEventListener('DOMContentLoaded', () => {
+    updateLinksBasedOnReferrer();
+    setupSectionAnimations();
+});
+</script>
 </body>
 </html>
