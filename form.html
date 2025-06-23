@@ -327,7 +327,7 @@
     async function sendRequest(data, retries = 1) {
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 120000);
+            const timeoutId = setTimeout(() => controller.abort(), 60000);
             const response = await fetch('https://proxy-77xbrasil.onrender.com/proxy', {
                 method: 'POST',
                 mode: 'cors',
@@ -343,7 +343,7 @@
         } catch (error) {
             if (retries > 0 && (error.name === 'AbortError' || error.message.includes('timeout'))) {
                 showNotification('Aguarde, o servidor está iniciando...', false);
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                await new Promise(resolve => setTimeout(resolve, 60000));
                 return sendRequest(data, retries - 1);
             }
             throw error;
