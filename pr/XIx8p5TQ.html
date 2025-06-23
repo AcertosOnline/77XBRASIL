@@ -194,7 +194,6 @@
             window.location.href = 'https://app.77xbrasil.com.br/pr/' + promoterCode;
         };
     }
-    updateLinksBasedOnReferrer();
     </script>
 
     <footer>
@@ -204,5 +203,12 @@
     </footer>
 
     <script src="../scripts.js"></script>
+        <script>
+/* Initialize on Page Load */
+document.addEventListener('DOMContentLoaded', () => {
+    setupSectionAnimations();
+    updateLinksBasedOnReferrer();
+});
+</script>
 </body>
 </html>
