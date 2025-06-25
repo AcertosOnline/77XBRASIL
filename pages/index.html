@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>77XBRASIL.COM.BR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="77XBRASIL.COM - Maior Plataforma de Apostas Online do Brasil">
+    <meta property="og:description" content="Descubra a 77XBRASIL.COM, líder em apostas online no Brasil com cotações imbatíveis e bônus exclusivos. Cadastre-se hoje!">
+    <meta property="og:image" content="https://77xxbrasil.com/pages/pages.png">
+    <meta property="og:url" content="https://77xxbrasil.com/pages">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="77XBRASIL.COM">
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="77XBRASIL.COM - Maior Plataforma de Apostas Online do Brasil">
+    <meta name="twitter:description" content="Aposte com confiança na 77XBRASIL.COM! Cotações altas, bônus generosos e segurança garantida. Junte-se agora!">
+    <meta name="twitter:image" content="https://77xxbrasil.com/pages/pages.png">
+    <style>
+        .status-message {
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .readonly-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .readonly-input {
+            flex: 1;
+            background-color: #f3f4f6;
+            cursor: pointer;
+        }
+        .icon-button {
+            cursor: pointer;
+            padding: 0 8px;
+        }
+        .copy-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .status-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 3rem; /* Position to the left of paste button */
+        }
+        .paste-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem; /* Adjusted to ensure space for status icon */
+        }
+        /* Custom focus style for thinner borders */
+        input:focus {
+            --tw-ring-width: 1px !important;
+            --tw-ring-offset-width: 0px !important;
+            border-width: 1px !important;
+        }
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            .main-container {
+                padding: 1rem;
+                min-width: 300px;
+            }
+            .status-message {
+                font-size: 1rem;
+            }
+            .notification {
+                padding: 0.75rem;
+                font-size: 0.875rem;
+            }
+            .whatsapp-prefix {
+                min-width: 60px;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            .success-text {
+                font-size: 0.875rem;
+            }
+            .readonly-input-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .icon-button {
+                padding: 0.5rem;
+            }
+            .status-icon {
+                right: 2.5rem; /* Adjusted for mobile */
+            }
+            .paste-button {
+                right: 0.5rem; /* Adjusted for mobile */
+            }
+        }
+        @media (min-width: 400px) {
+            .readonly-input-container {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center min-h-screen">
+    <div id="loader-container" class="hidden fixed inset-0 flex flex-col justify-center items-center h-screen bg-gray-900/50 z-50">
+        <img src="loader-espiral.svg" alt="Carregando..." class="w-20 h-20">
+        <div id="status-message" class="status-message"></div>
+    </div>
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-lg relative z-10 main-container">
+        <h1 class="text-3xl font-semibold text-gray-800 text-center mb-8">77XBRASIL.COM</h1>
+        <div id="notification" class="hidden absolute top-4 left-4 right-4 p-4 rounded-lg shadow-md flex items-center justify-between transition-all duration-300 notification" role="alert">
+            <span id="notificationText"></span>
+            <button id="closeNotification" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="successMessage" class="hidden text-center space-y-4">
+            <h2 class="text-2xl font-semibold text-green-600">Página Criada com Sucesso!</h2>
+            <p class="text-gray-700 success-text">Seu link personalizado:</p>
+            <div class="readonly-input-container">
+                <div class="relative flex-1">
+                    <input id="successLink" type="text" readonly class="readonly-input mt-1 block w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg shadow-sm text-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200" value="">
+                    <button id="copyLinkButton" class="copy-icon">
+                        <img src="copiar.svg" alt="Copiar" class="w-5 h-5">
+                    </button>
+                </div>
+                <a id="openLink" href="#" target="_blank" class="icon-button">
+                    <img src="abrir.svg" alt="Abrir" class="w-5 h-5">
+                </a>
+            </div>
+            <p class="text-sm text-gray-500 success-text">Deseja criar outro link? <a id="resetLink" href="#" class="text-indigo-600 hover:underline">Criar nova página</a></p>
+        </div>
+        <form id="promotorForm" class="space-y-6">
+            <div class="relative">
+                <label for="promotorLink" class="block text-sm font-medium text-gray-700">Link de Promotor</label>
+                <div class="input-container">
+                    <input type="url" id="promotorLink" name="promotorLink" class="mt-1 block w-full px-4 py-3 pr-20 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 h-12 box-border" placeholder="https://app.77xbrasil.com.br/pr/..." required aria-describedby="linkError">
+                    <span id="linkStatus" class="status-icon">
+                        <svg id="linkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                    </span>
+                    <button type="button" id="pasteLinkButton" class="paste-button">
+                        <img src="colar.svg" alt="Colar" class="w-5 h-5">
+                    </button>
+                </div>
+                <p id="linkError" class="mt-1 text-sm text-red-600 hidden"></p>
+            </div>
+            <div class="relative">
+                <label for="whatsappNumber" class="block text-sm font-medium text-gray-700">Número do WhatsApp</label>
+                <div class="flex relative">
+                    <span class="inline-flex items-center px-4 py-3 h-12 border border-r-0 border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 text-sm font-medium box-border whatsapp-prefix">+55</span>
+                    <div class="input-container flex-1">
+                        <input type="tel" id="whatsappNumber" name="whatsappNumber" class="block w-full px-4 py-3 pr-20 h-12 border border-gray-300 rounded-r-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all duration-200 box-border" placeholder="(XX) 9XXXX-XXXX" required>
+                        <span id="whatsappStatus" class="status-icon">
+                            <svg id="whatsappIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"></svg>
+                        </span>
+                        <button type="button" id="pasteWhatsappButton" class="paste-button">
+                            <img src="colar.svg" alt="Colar" class="w-5 h-5">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="submitButton" class="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 flex items-center justify-center opacity-50 cursor-not-allowed" disabled>
+                <span id="buttonText">Enviar</span>
+                <svg id="spinner" class="hidden w-5 h-5 ml-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12a8 8 0 1116 0 8 8 0 01-16 0z"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+<script>
+    const promotorLinkInput = document.getElementById('promotorLink');
+    const whatsappNumberInput = document.getElementById('whatsappNumber');
+    const linkStatus = document.getElementById('linkStatus');
+    const whatsappStatus = document.getElementById('whatsappStatus');
+    const linkIcon = document.getElementById('linkIcon');
+    const whatsappIcon = document.getElementById('whatsappIcon');
+    const linkError = document.getElementById('linkError');
+    const submitButton = document.getElementById('submitButton');
+    const buttonText = document.getElementById('buttonText');
+    const spinner = document.getElementById('spinner');
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+    const closeNotification = document.getElementById('closeNotification');
+    const loaderContainer = document.getElementById('loader-container');
+    const statusMessage = document.getElementById('status-message');
+    const successMessage = document.getElementById('successMessage');
+    const successLink = document.getElementById('successLink');
+    const copyLinkButton = document.getElementById('copyLinkButton');
+    const openLink = document.getElementById('openLink');
+    const resetLink = document.getElementById('resetLink');
+    const pasteLinkButton = document.getElementById('pasteLinkButton');
+    const pasteWhatsappButton = document.getElementById('pasteWhatsappButton');
+    const promotorForm = document.getElementById('promotorForm');
+    let isLinkValid = false;
+    let isWhatsappValid = false;
+    let debounceTimeout;
+    let notificationTimeout;
+
+    // Lista de DDDs válidos no Brasil (11 a 99)
+    const validDDDs = Array.from({ length: 89 }, (_, i) => (i + 11).toString());
+
+    // Função para mostrar notificações com auto-fechamento
+    function showNotification(message, isError = false) {
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+        notificationText.textContent = message;
+        notification.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700', 'opacity-0');
+        notification.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700', 'opacity-100');
+        notificationTimeout = setTimeout(() => {
+            notification.classList.add('opacity-0');
+            setTimeout(() => notification.classList.add('hidden'), 300);
+        }, 10000);
+    }
+
+    // Função para exibir mensagens de status dinâmicas
+    function showStatusMessages() {
+        const messages = [
+            'Conectando ao servidor...',
+            'Enviando dados...',
+            'Gerando sua página...'
+        ];
+        let index = 0;
+        statusMessage.textContent = messages[0];
+        const interval = setInterval(() => {
+            if (index < messages.length - 1) {
+                index++;
+                statusMessage.textContent = messages[index];
+            }
+        }, 5000);
+        return () => clearInterval(interval);
+    }
+
+    // Função para validar o link
+    function validateLink() {
+        const link = promotorLinkInput.value.trim();
+        const urlPattern = /^https:\/\/app\.77xbrasil\.com\.br\/pr\/[a-zA-Z0-9]{5,}$/;
+        isLinkValid = urlPattern.test(link);
+        linkIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+        linkIcon.innerHTML = isLinkValid
+            ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+            : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        linkIcon.classList.add(isLinkValid ? 'text-green-500' : link ? 'text-red-500' : 'text-gray-500');
+        promotorLinkInput.classList.remove('border-green-500', 'border-red-500');
+        promotorLinkInput.classList.add(isLinkValid ? 'border-green-500' : link ? 'border-red-500' : 'border-gray-300');
+        linkError.classList.toggle('hidden', isLinkValid || !link);
+        linkError.textContent = link && !isLinkValid ? 'O link deve começar com "https://app.77xbrasil.com.br/pr/" e conter pelo menos 5 caracteres após o prefixo.' : '';
+        linkStatus.style.cursor = (link && !isLinkValid) ? 'pointer' : 'default';
+        updateSubmitButton();
+    }
+
+    // Função para extrair o código do promotor do link
+    function extractPromoterCode(link) {
+        const prefix = 'https://app.77xbrasil.com.br/pr/';
+        if (link.startsWith(prefix)) {
+            return link.slice(prefix.length);
+        }
+        return '';
+    }
+
+    // Função para normalizar número de telefone
+    function normalizePhoneNumber(value) {
+        let digits = value.replace(/\D/g, '');
+        return digits;
+    }
+
+    // Função para formatar número de telefone
+    function formatPhoneNumber(digits) {
+        if (digits.length === 0) return '';
+        if (digits.length <= 2) return digits;
+        if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+        if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6, 10)}`;
+        return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+    }
+
+    // Função para validar número de WhatsApp
+    function validatePhoneNumber() {
+        const digits = normalizePhoneNumber(whatsappNumberInput.value);
+        const ddd = digits.slice(0, 2);
+        isWhatsappValid = validDDDs.includes(ddd) && 
+            (digits.length === 10 || (digits.length === 11 && digits[2] === '9'));
+        whatsappIcon.classList.remove('hidden', 'text-green-500', 'text-red-500');
+        whatsappIcon.innerHTML = isWhatsappValid
+            ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>'
+            : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+        whatsappIcon.classList.add(isWhatsappValid ? 'text-green-500' : digits ? 'text-red-500' : 'text-gray-500');
+        whatsappNumberInput.classList.remove('border-green-500', 'border-red-500');
+        whatsappNumberInput.classList.add(isWhatsappValid ? 'border-green-500' : digits ? 'border-red-500' : 'border-gray-300');
+        whatsappStatus.style.cursor = (digits && !isWhatsappValid) ? 'pointer' : 'default';
+        updateSubmitButton();
+    }
+
+    // Função para atualizar estado do botão
+    function updateSubmitButton() {
+        if (isLinkValid && isWhatsappValid) {
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.add('hover:bg-indigo-700');
+            submitButton.disabled = false;
+        } else {
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            submitButton.classList.remove('hover:bg-indigo-700');
+            submitButton.disabled = true;
+        }
+    }
+
+    // Função de debounce para validações
+    function debounce(func, wait) {
+        return function (...args) {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
+    // Função para exibir mensagem de sucesso
+    function showSuccessMessage(data) {
+        successLink.value = data.htmlPagesUrl;
+        openLink.href = data.htmlPagesUrl;
+        promotorForm.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+    }
+
+    // Função para enviar requisição com retry
+    async function sendRequest(data, retries = 1) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 12000);
+            const formData = new URLSearchParams({
+                promoterCode: data.promoterCode,
+                whatsappNumber: data.whatsappNumber,
+            });
+            const response = await fetch('https://script.google.com/macros/s/AKfycbxYojoON2RpbvfayaYcCvpgAB1p2MAk5d_tWRk2fco_uvkMbPIgh8SEomsdCmodb1RJbA/exec', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString(),
+                signal: controller.signal,
+            });
+            clearTimeout(timeoutId);
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+            const result = await response.json();
+            if (result.error) {
+                showNotification(result.error, true);
+                throw new Error(result.error);
+            }
+            return result;
+        } catch (error) {
+            if (retries > 0 && (error.name === 'AbortError' || error.message.includes('timeout'))) {
+                showNotification('Aguarde, o servidor está iniciando...', false);
+                await new Promise(resolve => setTimeout(resolve, 15000));
+                return sendRequest(data, retries - 1);
+            }
+            throw error;
+        }
+    }
+
+    // Função para verificar localStorage ao carregar
+    function checkStoredSuccess() {
+        const storedData = localStorage.getItem('promoterSuccess');
+        if (storedData) {
+            const data = JSON.parse(storedData);
+            showSuccessMessage(data);
+        }
+    }
+
+    // Evento de entrada para o link
+    promotorLinkInput.addEventListener('input', debounce(validateLink, 300));
+
+    // Evento de entrada para o WhatsApp com formatação não intrusiva
+    whatsappNumberInput.addEventListener('input', (e) => {
+        const cursorPosition = e.target.selectionStart;
+        const originalLength = e.target.value.length;
+        const normalized = normalizePhoneNumber(e.target.value);
+        const formatted = formatPhoneNumber(normalized);
+        e.target.value = formatted;
+
+        const newLength = formatted.length;
+        const cursorOffset = newLength - originalLength;
+        const newCursorPosition = Math.max(0, cursorPosition + cursorOffset);
+        e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+
+        debounce(validatePhoneNumber, 300)();
+    });
+
+    // Detecta preenchimento automático
+    whatsappNumberInput.addEventListener('change', () => {
+        const normalized = normalizePhoneNumber(whatsappNumberInput.value);
+        whatsappNumberInput.value = formatPhoneNumber(normalized);
+        validatePhoneNumber();
+    });
+
+    // Botão Colar para o link
+    pasteLinkButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            promotorLinkInput.value = text;
+            validateLink();
+        } catch (error) {
+            showNotification('Erro ao colar o link.', true);
+        }
+    });
+
+    // Botão Colar para o WhatsApp
+    pasteWhatsappButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            whatsappNumberInput.value = formatPhoneNumber(normalizePhoneNumber(text));
+            validatePhoneNumber();
+        } catch (error) {
+            showNotification('Erro ao colar o número.', true);
+        }
+    });
+
+    // Limpar campo de link ao clicar no "X" (quando inválido)
+    linkStatus.addEventListener('click', () => {
+        if (!isLinkValid && promotorLinkInput.value.trim()) {
+            promotorLinkInput.value = '';
+            validateLink();
+        }
+    });
+
+    // Limpar campo de WhatsApp ao clicar no "X" (quando inválido)
+    whatsappStatus.addEventListener('click', () => {
+        if (!isWhatsappValid && whatsappNumberInput.value.trim()) {
+            whatsappNumberInput.value = '';
+            validatePhoneNumber();
+        }
+    });
+
+    // Fechar notificação manualmente
+    closeNotification.addEventListener('click', () => {
+        clearTimeout(notificationTimeout);
+        notification.classList.add('opacity-0');
+        setTimeout(() => notification.classList.add('hidden'), 300);
+    });
+
+    // Botão Copiar Link e clique no input
+    function copyLinkToClipboard() {
+        navigator.clipboard.writeText(successLink.value).then(() => {
+            showNotification('Link copiado!', false);
+        }).catch(() => {
+            showNotification('Erro ao copiar o link.', true);
+        });
+    }
+
+    copyLinkButton.addEventListener('click', copyLinkToClipboard);
+    successLink.addEventListener('click', copyLinkToClipboard);
+
+    // Resetar para criar nova página
+    resetLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('promoterSuccess');
+        promotorForm.classList.remove('hidden');
+        successMessage.classList.add('hidden');
+        promotorLinkInput.value = '';
+        whatsappNumberInput.value = '';
+        validateLink();
+        validatePhoneNumber();
+    });
+
+    // Envio do formulário
+    promotorForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        buttonText.textContent = 'Enviando...';
+        spinner.classList.remove('hidden');
+        submitButton.disabled = true;
+        loaderContainer.classList.remove('hidden');
+        const clearStatusMessages = showStatusMessages();
+
+        const promoterCode = extractPromoterCode(promotorLinkInput.value);
+        const whatsappNumber = normalizePhoneNumber(whatsappNumberInput.value); // Sem +55
+
+        try {
+            const result = await sendRequest({ promoterCode, whatsappNumber });
+            clearStatusMessages();
+            localStorage.setItem('promoterSuccess', JSON.stringify(result));
+            showSuccessMessage(result);
+            showNotification('Página criada com sucesso!', false);
+        } catch (error) {
+            let errorMessage = 'Erro ao enviar os dados. Tente novamente.';
+            if (error.message.includes('403')) {
+                errorMessage = 'Falha ao acessar o servidor. Verifique a conexão.';
+            } else if (error.name === 'AbortError') {
+                errorMessage = 'A requisição demorou muito para responder.';
+            } else if (error.message.includes('Invalid JSON response')) {
+                errorMessage = 'Erro no servidor. Resposta inválida recebida.';
+            }
+            showNotification(errorMessage, true);
+            console.error('Erro na requisição:', error);
+        } finally {
+            buttonText.textContent = 'Enviar';
+            spinner.classList.add('hidden');
+            loaderContainer.classList.add('hidden');
+            submitButton.disabled = false;
+            updateSubmitButton();
+        }
+    });
+
+    // Verificar localStorage ao carregar
+    checkStoredSuccess();
+
+    // Foco inicial no campo de link
+    promotorLinkInput.focus();
+</script>
+</body>
+</html>
