@@ -3,7 +3,7 @@ function createSections() {
   const sectionsContent = `
     <section id="cotacoes">
       <h2 class="fade-in">SUPER COTAÇÃO</h2>
-      <img loading="lazy" class="fade-in" src="img/8mil.webp" alt="Cotações de 8 Mil na 77XBRASIL.COM"><br>
+      <img loading="lazy" class="fade-in" src="../img/8mil.webp" alt="Cotações de 8 Mil na 77XBRASIL.COM"><br>
       <div class="expandable-container fade-in">
         <div class="expandable-title" id="expandable-title">Mostrar cotações</div>
       </div>
