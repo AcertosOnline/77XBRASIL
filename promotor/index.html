@@ -146,28 +146,28 @@
         }
         #affiliate .promoter-button,
         #affiliate .landing-page-button {
-            background: linear-gradient(90deg, #011f45, #0288d1); /* Gradient button */
+            background: linear-gradient(90deg, #011f45, #0288d1); /* Restored original blue gradient */
             color: #ffffff;
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 18px; /* Restored original font size */
+            font-weight: 700; /* Restored original font weight */
             font-family: 'Roboto', sans-serif;
-            padding: 15px 30px;
+            padding: 15px 30px; /* Restored original padding */
             border: none;
             border-radius: 25px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194;
+            box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194; /* Restored original blue glow */
             transition: box-shadow 0.3s ease, background 0.3s ease, transform 0.3s ease;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 10px;
-            margin: 20px auto;
+            margin: 10px auto;
             text-decoration: none;
         }
         #affiliate .promoter-button:hover,
         #affiliate .landing-page-button:hover {
-            background: linear-gradient(90deg, #2E7D32, #4CAF50);
-            box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50); /* Restored original hover green gradient */
+            box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20; /* Restored original hover green glow */
             transform: scale(1.05);
         }
         #affiliate .promoter-button img {
@@ -187,6 +187,13 @@
             padding: 20px;
             border-radius: 15px;
             border: 1px solid rgba(77, 255, 255, 0.3);
+        }
+        #affiliate .promoter-buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 20px auto;
         }
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -241,7 +248,7 @@
                 font-size: 36px;
             }
             #affiliate .affiliate-card p {
-                font-size: 14px;
+                font-font-size: 14px;
             }
             #affiliate .affiliate-limits h3 {
                 font-size: 20px;
@@ -251,8 +258,8 @@
 </head>
 <body>
     <header>
-    <img src="../logo.webp" alt="Logo 77XBRASIL.COM - Plataforma de Apostas Online" width="150" height="76" style="width: 150px; height: 76px;" loading="eager">
-    <p>A maior plataforma de apostas online do Brasil!</p>
+        <img src="../logo.webp" alt="Logo 77XBRASIL.COM - Plataforma de Apostas Online" width="150" height="76" style="width: 150px; height: 76px;" loading="eager">
+        <p>A maior plataforma de apostas online do Brasil!</p>
     </header>
 
     <section id="affiliate">
@@ -289,10 +296,24 @@
             <p class="landing-page-text">Exclusividade: Após se cadastrar como promotor, receba uma Landing Page personalizada e totalmente gratuita para impulsionar seus resultados!</p>
             <a href="https://77xxbrasil.com" class="landing-page-button">Ver exemplo de Landing Page</a>
         </div>
-        <a href="https://wa.me/5583993708505" class="promoter-button">
-            <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
-            QUERO SER PROMOTOR
-        </a>
+        <div class="promoter-buttons-container">
+            <a href="https://wa.me/5511945594430" class="promoter-button">
+                <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
+                (11) 94559-4430
+            </a>
+            <a href="https://wa.me/5511961045756" class="promoter-button">
+                <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
+                (11) 96104-5756
+            </a>
+            <a href="https://wa.me/5511983208283" class="promoter-button">
+                <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
+                (11) 98320-8283
+            </a>
+            <a href="https://wa.me/5511983403666" class="promoter-button">
+                <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
+                (11) 98340-3666
+            </a>
+        </div>
     </section>
 </body>
 </html>
