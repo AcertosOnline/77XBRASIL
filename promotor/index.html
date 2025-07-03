@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>77x Brasil - Seja um Promotor!</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../fonts.css">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="77x Brasil - Seja um promotor!">
+    <meta property="og:description" content="Ganhe 10% de comissão nas vendas no Jogo do Bicho e + 10% dos lucros no fechamento!">
+    <meta property="og:image" content="https://77xxbrasil.com/promotor/banner.jpg">
+    <meta property="og:url" content="https://77xxbrasil.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="77XBRASIL.COM">
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="77x Brasil - Seja um promotor!">
+    <meta name="twitter:description" content="Ganhe 10% de comissão nas vendas no Jogo do Bicho e + 10% dos lucros no fechamento!">
+    <meta name="twitter:image" content="https://77xxbrasil.com/promotor/banner.jpg">
+
+    <style>
+        /* Affiliate Section Styles, enhanced for sophistication */
+        #affiliate {
+            background: linear-gradient(180deg, #000000, #011f45); /* Gradient from styles.css */
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        #affiliate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 10%, transparent 50%);
+            opacity: 0.3;
+            z-index: 0;
+        }
+        #affiliate > * {
+            position: relative;
+            z-index: 1;
+        }
+        #affiliate h2 {
+            font-size: 40px;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+            background: linear-gradient(180deg, #ffd700, #ffeb3b); /* Gold gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        #affiliate h2::before,
+        #affiliate h2::after {
+            content: '★';
+            font-size: 40px;
+            background: linear-gradient(180deg, #ffd700, #ffeb3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 10px;
+        }
+        #affiliate .affiliate-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+        #affiliate .affiliate-card {
+            background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(77, 255, 255, 0.3); /* Subtle cyan border */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        #affiliate .affiliate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(77, 255, 255, 0.4); /* Glowing effect on hover */
+        }
+        #affiliate .affiliate-card .icon {
+            font-size: 48px;
+            color: #ffffff;
+            text-shadow: 
+                2px 2px 5px rgba(0, 0, 0, 0.9),
+                0 0 10px rgba(255, 215, 0, 0.5); /* Matches bonus-card highlight */
+            margin-bottom: 15px;
+        }
+        #affiliate .affiliate-card p {
+            font-size: 15px;
+            font-weight: 400;
+            color: #e0e0e0;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.5;
+        }
+        #affiliate .affiliate-limits {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(77, 255, 255, 0.3);
+        }
+        #affiliate .affiliate-limits h3 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(180deg, #ffd700, #ffeb3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-family: 'Oswald', sans-serif;
+        }
+        #affiliate .affiliate-limits ul {
+            list-style: none;
+            text-align: left;
+        }
+        #affiliate .affiliate-limits li {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        #affiliate .affiliate-limits li::before {
+            content: '★';
+            color: #ffd700;
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        #affiliate .landing-page-text {
+            font-size: 16px;
+            color: #e0e0e0;
+            margin: 20px 0;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            font-weight: 500;
+        }
+        #affiliate .promoter-button,
+        #affiliate .landing-page-button {
+            background: linear-gradient(90deg, #011f45, #0288d1); /* Gradient button */
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Roboto', sans-serif;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194;
+            transition: box-shadow 0.3s ease, background 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px auto;
+            text-decoration: none;
+        }
+        #affiliate .promoter-button:hover,
+        #affiliate .landing-page-button:hover {
+            background: linear-gradient(90deg, #2E7D32, #4CAF50);
+            box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20;
+            transform: scale(1.05);
+        }
+        #affiliate .promoter-button img {
+            width: 24px;
+            height: 24px;
+        }
+        #affiliate .promo-text {
+            max-width: 800px;
+            margin: 20px auto 40px;
+            font-size: 18px;
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(77, 255, 255, 0.3);
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #affiliate {
+                padding: 40px 15px;
+            }
+            #affiliate h2 {
+                font-size: 28px;
+            }
+            #affiliate h2::before,
+            #affiliate h2::after {
+                font-size: 28px;
+            }
+            #affiliate .affiliate-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            #affiliate .affiliate-card {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            #affiliate .affiliate-limits {
+                max-width: 90%;
+            }
+            #affiliate .affiliate-limits li {
+                font-size: 16px;
+            }
+            #affiliate .affiliate-limits li::before {
+                font-size: 18px;
+                margin-right: 8px;
+            }
+            #affiliate .promoter-button,
+            #affiliate .landing-page-button {
+                font-size: 16px;
+                padding: 12px 20px;
+            }
+            #affiliate .promoter-button img {
+                width: 20px;
+                height: 20px;
+            }
+            #affiliate .promo-text {
+                font-size: 16px;
+                max-width: 90%;
+            }
+        }
+        @media (max-width: 480px) {
+            #affiliate .affiliate-card {
+                padding: 15px;
+            }
+            #affiliate .affiliate-card .icon {
+                font-size: 36px;
+            }
+            #affiliate .affiliate-card p {
+                font-size: 14px;
+            }
+            #affiliate .affiliate-limits h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="logo.webp" alt="Logo 77XBRASIL.COM - Plataforma de Apostas Online">
+        <p>A maior plataforma de apostas online do Brasil!</p>
+    </header>
+
+    <section id="affiliate">
+        <h2>Programa de Afiliados 77XBRASIL.COM</h2>
+        <p class="promo-text">Junte-se ao maior programa de afiliados de apostas do Brasil! Ganhe comissões generosas, receba materiais exclusivos e tenha sua própria Landing Page personalizada. Comece hoje e transforme suas indicações em lucro!</p>
+        <div class="affiliate-container">
+            <div class="affiliate-card">
+                <span class="icon">💰</span>
+                <p>Ganhe 10% de comissão por cada venda no Jogo do Bicho</p>
+            </div>
+            <div class="affiliate-card">
+                <span class="icon">💰</span>
+                <p>Receba 5% de comissão em todas as vendas da Fazendinha</p>
+            </div>
+            <div class="affiliate-card">
+                <span class="icon">💰</span>
+                <p>10% de comissão sobre o lucro mensal de Bingo e Cassino</p>
+            </div>
+            <div class="affiliate-card">
+                <span class="icon">💰</span>
+                <p>10% de comissão sobre o lucro mensal do Jogo do Bicho</p>
+            </div>
+            <div class="affiliate-card">
+                <span class="icon">📦</span>
+                <p>Materiais de promoção completos e gratuitos inclusos</p>
+            </div>
+        </div>
+        <div class="affiliate-limits">
+            <h3>Limites Diários</h3>
+            <ul>
+                <li>Até 8 grupos por dia</li>
+                <li>Até 25 dezenas por dia</li>
+            </ul>
+            <p class="landing-page-text">Exclusividade: Após se cadastrar como promotor, receba uma Landing Page personalizada e totalmente gratuita para impulsionar seus resultados!</p>
+            <a href="https://77xxbrasil.com" class="landing-page-button">Ver exemplo de Landing Page</a>
+        </div>
+        <a href="https://wa.me/5583993708505" class="promoter-button">
+            <img src="img/WhatsApp.svg" alt="WhatsApp Icon">
+            QUERO SER PROMOTOR
+        </a>
+    </section>
+</body>
+</html>
