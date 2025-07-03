@@ -6,6 +6,7 @@
     <title>77x Brasil - Seja um Promotor!</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../fonts.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap">
 
     <!-- Open Graph Tags -->
     <meta property="og:title" content="77x Brasil - Seja um promotor!">
@@ -23,7 +24,7 @@
     <style>
         /* Affiliate Section Styles, enhanced for sophistication */
         #affiliate {
-            background: linear-gradient(180deg, #000000, #011f45); /* Gradient from styles.css */
+            background: linear-gradient(180deg, #000000, #011f45);
             padding: 80px 20px;
             text-align: center;
             position: relative;
@@ -48,7 +49,7 @@
             font-size: 40px;
             font-weight: 700;
             font-family: 'Oswald', sans-serif;
-            background: linear-gradient(180deg, #ffd700, #ffeb3b); /* Gold gradient */
+            background: linear-gradient(180deg, #ffd700, #ffeb3b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 40px;
@@ -72,27 +73,27 @@
             margin: 0 auto 40px;
         }
         #affiliate .affiliate-card {
-            background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 20px;
-            border: 1px solid rgba(77, 255, 255, 0.3); /* Subtle cyan border */
+            border: 1px solid rgba(77, 255, 255, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         #affiliate .affiliate-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(77, 255, 255, 0.4); /* Glowing effect on hover */
+            box-shadow: 0 6px 20px rgba(77, 255, 255, 0.4);
         }
         #affiliate .affiliate-card .icon {
             font-size: 48px;
             color: #ffffff;
             text-shadow: 
                 2px 2px 5px rgba(0, 0, 0, 0.9),
-                0 0 10px rgba(255, 215, 0, 0.5); /* Matches bonus-card highlight */
+                0 0 10px rgba(255, 215, 0, 0.5);
             margin-bottom: 15px;
         }
-        #affiliate .affiliate-card p {
+        #affiliateev .affiliate-card p {
             font-size: 15px;
             font-weight: 400;
             color: #e0e0e0;
@@ -104,7 +105,7 @@
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.05); /* Glassmorphism effect */
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             border: 1px solid rgba(77, 255, 255, 0.3);
@@ -146,28 +147,29 @@
         }
         #affiliate .promoter-button,
         #affiliate .landing-page-button {
-            background: linear-gradient(90deg, #011f45, #0288d1); /* Restored original blue gradient */
+            background: linear-gradient(90deg, #011f45, #0288d1);
             color: #ffffff;
-            font-size: 18px; /* Restored original font size */
-            font-weight: 700; /* Restored original font weight */
-            font-family: 'Roboto', sans-serif;
-            padding: 15px 30px; /* Restored original padding */
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif; /* Updated to modern, elegant font */
+            padding: 10px 20px;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194; /* Restored original blue glow */
+            box-shadow: 0 0 10px #2dc7ef, 0 0 20px #067be2, 0 0 30px #055194;
             transition: box-shadow 0.3s ease, background 0.3s ease, transform 0.3s ease;
             display: flex;
             align-items: center;
+            justify-content: center; /* Center text and icon */
             gap: 10px;
             margin: 10px auto;
             text-decoration: none;
         }
         #affiliate .promoter-button:hover,
         #affiliate .landing-page-button:hover {
-            background: linear-gradient(90deg, #2E7D32, #4CAF50); /* Restored original hover green gradient */
-            box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20; /* Restored original hover green glow */
+            background: linear-gradient(90deg, #2E7D32, #4CAF50);
+            box-shadow: 0 0 15px #1B5E20, 0 0 25px #1B5E20, 0 0 40px #1B5E20;
             transform: scale(1.05);
         }
         #affiliate .promoter-button img {
@@ -194,6 +196,15 @@
             align-items: center;
             gap: 10px;
             margin: 20px auto;
+        }
+        #affiliate .promoter-buttons-container h3 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(180deg, #ffd700, #ffeb3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-family: 'Oswald', sans-serif;
         }
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -229,7 +240,7 @@
             #affiliate .promoter-button,
             #affiliate .landing-page-button {
                 font-size: 16px;
-                padding: 12px 20px;
+                padding: 8px 16px;
             }
             #affiliate .promoter-button img {
                 width: 20px;
@@ -238,6 +249,9 @@
             #affiliate .promo-text {
                 font-size: 16px;
                 max-width: 90%;
+            }
+            #affiliate .promoter-buttons-container h3 {
+                font-size: 20px;
             }
         }
         @media (max-width: 480px) {
@@ -248,10 +262,13 @@
                 font-size: 36px;
             }
             #affiliate .affiliate-card p {
-                font-font-size: 14px;
+                font-size: 14px;
             }
             #affiliate .affiliate-limits h3 {
                 font-size: 20px;
+            }
+            #affiliate .promoter-buttons-container h3 {
+                font-size: 18px;
             }
         }
     </style>
@@ -294,9 +311,10 @@
                 <li>Até 25 dezenas por dia</li>
             </ul>
             <p class="landing-page-text">Exclusividade: Após se cadastrar como promotor, receba uma Landing Page personalizada e totalmente gratuita para impulsionar seus resultados!</p>
-            <a href="https://77xxbrasil.com" class="landing-page-button">Ver Landing Page</a>
+            <a href="https://77xxbrasil.com" class="landing-page-button">Ver landing page</a>
         </div>
         <div class="promoter-buttons-container">
+            <h3>Entre em contato e seja promotor!</h3>
             <a href="https://wa.me/5511945594430" class="promoter-button">
                 <img src="../img/WhatsApp.svg" alt="WhatsApp Icon">
                 (11) 94559-4430
