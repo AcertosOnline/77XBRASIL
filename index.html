@@ -62,12 +62,56 @@
         ]
     }
     </script>
+<style>
+	/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Fade-In Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    padding: 40px 0;
+    background: linear-gradient(180deg, #000000, #011f45); 
+}
+
+header p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 20px;
+    font-family: 'Oswald', sans-serif;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+</style>
     <!-- External CSS -->
     <link rel="stylesheet" href="styles.css">
     <!-- External Font (assumed to exist as per original) -->
     <link rel="stylesheet" href="fonts.css">
     <link rel="preload" as="image" href="logo.webp">
-    <script src="sections.js"></script>
 </head>
 <body>
     <header>
@@ -92,7 +136,7 @@
 
     <!-- External JavaScript -->
     <script src="scripts.js"></script>
-    <!-- <script src="sections.js"></script> -->
+    <script src="sections.js"></script>
 <script>
 /* Initialize on Page Load */
 document.addEventListener('DOMContentLoaded', () => {
